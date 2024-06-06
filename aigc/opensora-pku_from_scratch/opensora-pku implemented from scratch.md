@@ -131,22 +131,50 @@ for i, data in enumerate(loader):
 
 ### 4、训练流程搭建
 
-#### 4.1 [MindSpore 静态图训练流程简介](./docs/MindSpore static graph training process introduction.md)
+#### 4.1 [MindSpore 静态图训练流程小示例](./docs/MindSpore static graph training process introduction.md)
 
 #### 4.2 opensora-pku 1.0 训练流程 (用于流程说明，代码不可运行)
 
 ```python
+from mindspore import Model
+from mindone.trainers.optim import create_optimizer
+from mindone.trainers.train_step import TrainOneStepWrapper
 from .opensora.models.ae.videobase.causal_vae import CausalVAEModelWrapper
 from .opensora.models.text_encoder.t5 import T5Embedder
 from .opensora.models.diffusion.latte.modeling_latte import LatteT2V_XL_122
 from .opensora.models.diffusion.diffusion import create_diffusion_T as create_diffusion
+from .opensora.models.diffusion.latte.net_with_loss import DiffusionWithLoss
 
 latte = LatteT2V_XL_122(...)
 vae = CausalVAEModelWrapper(...)
 text_encoder = T5Embedder(...)
 diffusion = create_diffusion(timestep_respacing="")
+net_with_loss = DiffusionWithLoss(
+        latte,
+        diffusion,
+        vae=vae,
+        text_encoder=text_encoder,
+        ...
+)
 
+optimizer = create_optimizer(net_with_loss.trainable_params())
 
+train_one_setp = TrainOneStepWrapper(
+    net_with_loss,
+    optimizer=optimizer,
+    ...
+)
+
+# MindSpore 内置模型封装
+model = Model(train_one_setp)
+
+# 启动训练
+model.train(
+    epoch=1,
+    train_dataset=dataset,
+    callbacks=callback,
+    ...
+)
 ```
 
 
