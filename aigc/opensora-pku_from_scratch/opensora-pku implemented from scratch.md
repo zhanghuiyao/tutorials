@@ -7,7 +7,7 @@
 opensora-pku v1.0 整体结构使用 `T5` 作为默认文本编码器，`VideoCausalVAE` 作为默认视频压缩模型 以及 `Latte` 作为噪声预测模型，
 损失函数默认使用 `MSE loss`，训练过程采用图像、视频混合训练策略，整体流程如下图所示：
 
-![整体流程图](./imgs/img1.png)
+![整体流程图](./imgs/opensora_pku_overview.png)
 
 ### 2、主要模块搭建
 
