@@ -1,22 +1,24 @@
 
 
 ## 搭建MindSpore开发环境需要三步
-### 第一步 查mindspore / ascend driver+firmware / cann 版本配套关系
+  1. 查ascend driver/firmware/cann与mindspore配套表
+  2. 下载并安装ascend driver/firmware/cann toolkit
+  3. 下载并安装mindspore
+### 第一步 查ascend driver/firmare/cann与mindspore配套表
 
 | mindspore  | ascend driver | firmware    | cann toolkit/kernel
 | :---       |:---           | :--         |:--
 | 2.3.1      | 24.1.RC2      | 7.3.0.1.231 | 8.0.RC2.beta1
 | 2.3.0      | 24.1.RC2      | 7.3.0.1.231 | 8.0.RC2.beta1
 
-例如安装ms 2.3.1，ascend driver/firmware/cann相应的版本就是 24.1.RC2/7.3.0.1.231/8.0.RC2.beta1
-ms 2.3.0 依赖的driver/firmware/cann是一样的.
-
+如要安装ms 2.3.1，ascend driver/firmware/cann相应的版本就是 24.1.RC2/7.3.0.1.231/8.0.RC2.beta1
 - 温馨提示1: 请按照配套关系下载安装对应的版本，很多算法开发遇到的问题都来自于环境配置安装，请一定参考以上的配套关系表。
 - 温馨提示2: 从硬件适配度和特性方面考虑，建议使用最新的2.3.0/2.3.1版本进行算法开发，有问题请到gitee提issue，https://gitee.com/mindspore/mindspore/issues
-### 第二步 下载与安装相应的Ascend driver，firmware，cann相关软件包（以安装mindspore 2.3.1和2.3.0为例）
 
-#### ascend的driver/cann软件有两套版本系列，一个是商用版本，一个是社区版本。以下例子均来自于社区版本。两者区别与版本对应关系稍后整理
-#### 我们以atlas 800T A2训练服务器 aarch64 架构为例，下面表格是对应的版本run包下载方式
+### 第二步 下载并安装ascend driver/firmware/cann toolkit
+ - ascend的driver/cann软件有两套版本系列，一个是商用版本，一个是社区版本。以下例子均来自于社区版本。两者区别与版本对应关系稍后整理
+
+仍然以安装mindspore 2.3.1和2.3.0为例，硬件以atlas 800T A2训练服务器 aarch64 架构为例，下面表格是对应的版本run包下载方式
 
 序号  | ascend software             | version | package name | download | release date| 
 |:-- |:---                  |:---    |:---     | :--- | :---
@@ -73,7 +75,7 @@ pip install /usr/local/Ascend/ascend-toolkit/latest/lib64/te-*-py3-none-any.whl
 pip install /usr/local/Ascend/ascend-toolkit/latest/lib64/hccl-*-py3-none-any.whl
 ```
 
-### 第二步 安装mindspore whl包
+### 第三步 安装mindspore whl包
 mindspore的whl包有两种安装方式
 1. 直接pip install mindspore==2.3.1 or pip install mindspore==2.3.0（自动根据系统python版本和cpu架构安装相应的whl包） 
 2. 手动选择python版本和cpu架构相对应的whl包，下载和安装。
