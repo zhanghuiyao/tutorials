@@ -28,9 +28,6 @@ target = Tensor(1.0, ms.float32)
 loss = net_with_loss(x, target)
 ```
 
-```shell
-// 补充一个打印结果
-```
 
 #### 2、我们尝试构造一个用于一步训练的cell，并启动训练
 
@@ -69,8 +66,4 @@ target = Tensor(1.0, ms.float32)
 for i in range(10):
     loss = train_one_step(x, target)
     print(f"Step: {i}, loss: {loss}")
-```
-
-```shell
-// 补充一个打印结果
 ```
