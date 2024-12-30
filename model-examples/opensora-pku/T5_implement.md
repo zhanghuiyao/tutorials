@@ -2,7 +2,7 @@
 
 本文介绍如何使用 Mindspore 在 Ascend 910* 上构建 OpenSora-PKU 中用到的 T5 (Text-to-Text Transfer Transformer) 文本编码器模型。
 
-> 以下仅通过示例代码对 OpenSora-PKU 中 T5 文本编码器模型进行简单讲解，完整代码请到 mindone 套件中获取，代码位置 [opensora-pku](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku/opensora/models/text_encoder/t5_encoder.py)
+> 以下仅通过示例代码对 OpenSora-PKU 中 T5 文本编码器模型进行简单讲解，完整代码请到 mindone 套件中获取，代码位置 [opensora-pku](https://github.com/mindspore-lab/mindone/blob/b3d2a7c5faea702b6a440f488ead0697e84bf502/examples/opensora_pku/opensora/models/text_encoder/t5_encoder.py)
 
 论文：[Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/abs/1910.10683)
 
@@ -27,7 +27,7 @@ encoder 结构图，参考自 [illustrated-transformer](https://jalammar.github.
 ### 1.2 T5 结构较原Transformer改动点
 
 - 简化的 `层归一化层 (LayerNorm)`，将在下面介绍
-- 简化的 `位置嵌入(Position Embedding)`，详情见 [注意力模块中2.3节的描述](./T5_attention_module_implement.md)
+- 简化的 `位置嵌入(Position Embedding)`，详情见 [注意力模块中2.3节的描述](./attention_module_implement.md)
 
 <img src="imgs/t5_arch_diff.png" width="699">
 
@@ -35,7 +35,7 @@ encoder 结构图，参考自 [illustrated-transformer](https://jalammar.github.
 
 ### 2.1 T5 Attention 注意力模块实现
 
-请参考，[T5 注意力模块的 MindSpore 实现](./T5_attention_module_implement.md)
+请参考，[T5 注意力模块的 MindSpore 实现](./attention_module_implement.md)
 
 ### 2.2 T5 LayerNorm 基础模块实现
 

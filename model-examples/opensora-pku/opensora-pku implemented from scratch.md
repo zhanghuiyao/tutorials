@@ -1,6 +1,6 @@
 # OpenSora-PKU 从零到一简单介绍
 
-本文介绍如何使用 Mindspore 在 Ascend 910* 上从零到一实现 OpenSora-PKU 视频生成模型(静态图)，主要代码参考自mindone套件中[opensora-pku](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku)实现。
+本文介绍如何使用 Mindspore 在 Ascend 910* 上从零到一实现 OpenSora-PKU 视频生成模型(静态图)，主要代码参考自mindone套件中[opensora-pku v1.1](https://github.com/mindspore-lab/mindone/tree/b3d2a7c5faea702b6a440f488ead0697e84bf502/examples/opensora_pku)的实现。
 
 ### 1、基本训练流程介绍
 
@@ -42,6 +42,8 @@ print(f"reconstruct video value: {reconstruct_video[:, :, :20]}")
 
 
 #### 2.2 t5 模块搭建
+
+- [T5 模型详细介绍](./T5_implement.md)
 
 - [源码实现](https://github.com/mindspore-lab/mindone/blob/b3d2a7c5faea702b6a440f488ead0697e84bf502/examples/opensora_pku/opensora/models/text_encoder/t5.py#L24)
 
@@ -104,9 +106,11 @@ for i, data in enumerate(loader):
 
 ### 4、训练流程搭建
 
-#### 4.1 [MindSpore 静态图训练流程小示例](./docs/MindSpore static graph training process introduction.md)
+#### 4.1 [MindSpore 静态图训练流程小示例](./docs/MindSpore%20static%20graph%20training%20process%20introduction.md)
 
 #### 4.2 opensora-pku 1.0 训练流程 (用于流程说明，代码不可运行)
+
+[源码实现](https://github.com/mindspore-lab/mindone/blob/b3d2a7c5faea702b6a440f488ead0697e84bf502/examples/opensora_pku/README.md#training)
 
 ```python
 from mindspore import Model

@@ -1,8 +1,8 @@
-# T5 注意力模块的 MindSpore 实现
+# 注意力模块的 MindSpore 实现
 
-本文介绍如何基于 Mindspore 在 Ascend 910* 上实现 T5 网络的注意力模块。
+本文介绍如何基于 Mindspore 在 Ascend 910* 上实现注意力模块，以 Attention 在 T5 中的使用为例。
 
-> 以下仅通过示例代码对 T5 注意力模块进行简单讲解，完整代码请到 mindone 套件中获取，代码位置 [opensora-pku](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku/opensora/models/text_encoder/t5_encoder.py)
+> 以下仅通过示例代码对 T5 注意力模块进行简单讲解，完整代码请到 mindone 套件中获取，代码位置 [opensora-pku](https://github.com/mindspore-lab/mindone/blob/b3d2a7c5faea702b6a440f488ead0697e84bf502/examples/opensora_pku/opensora/models/text_encoder/t5_encoder.py)
 
 ## 1. 注意力模块原理介绍
 
