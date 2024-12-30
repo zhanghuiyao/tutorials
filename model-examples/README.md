@@ -7,9 +7,9 @@
    
 
 - Stable Diffusion XL MindSpore 实践系列
-    - [SDXL 推理流程简介与 MindSpore 实现](.sdxl/sdxl_infer.md)
-    - [Euler 采样器介绍与 Mindspore 实现](.sdxl/sampler_implement.md)
-    - [MindSpore 文生图训练数据集构造](./sdxl/create_text2image_datasets.md)
+    - [SDXL 推理流程简介与 MindSpore 实现](sdxl/sdxl_infer.md)
+    - [Euler 采样器介绍与 Mindspore 实现](sdxl/sampler_implement.md)
+    - [MindSpore 文生图训练数据集构造](sdxl/create_text2image_datasets.md)
 
 
 ### AIGC/文生视频

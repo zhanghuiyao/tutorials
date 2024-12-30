@@ -1,6 +1,6 @@
 # Latte 多头注意力模块的 MindSpore 实现
 
-本文介绍如何基于 Mindspore 在 Ascend 910* 上实现 Latte 网络 transformer block 使用的多头注意力模块（MHA），代码参考自mindone套件[opensora-pku](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku/opensora/models/diffusion/latte) Latte transformer block 使用的 `MultiHeadAttention`。
+本文介绍如何基于 Mindspore 在 Ascend 910* 上实现 Latte 网络 transformer block 使用的多头注意力模块（MHA），代码参考自mindone套件[opensora-pku](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku/) Latte transformer block 使用的 `MultiHeadAttention`。
 
 ## 1. 注意力机制简介
 

@@ -4,37 +4,36 @@
 
 ## 初始化 `__init__` 实现
 
-假设我们使用 sks dog 数据集做 dreambooth lora 微调，微调训练数据集共用 prompt "a photo of sks dog"。本案例中 text encoder 不参与训练，我们可以提前算好文本嵌入，text encoders 部分不涉及梯度计算，encode 的计算过程不需要封装到 forward 的方法中。我们在该 TrainStep Cell 初始化的时候传入"a photo of sks dog"的 编码后的输出 prompt_embeds, pooled_prompt_embeds, text_ids 即可。
+假设我们使用 [dog](https://huggingface.co/datasets/diffusers/dog-example) 数据集做 dreambooth lora 微调，微调训练数据集共用 prompt "a photo of sks dog"。本案例中 text encoder 不参与训练，我们可以提前算好文本嵌入，text encoders 部分不涉及梯度计算，encode 的计算过程不需要封装到 forward 的方法中。我们在该 TrainStep Cell 初始化的时候传入"a photo of sks dog"的 编码后的输出 prompt_embeds, pooled_prompt_embeds, text_ids 即可。
 
-`TrainStep` __init__方法有 self.model = model.set_grad(True)，操作，我们要训练的是 flux transformer 的部分，因此在super().__init__的时候传入 `model = transformer`。
+抽象类 `TrainStep` __init__方法有 self.model = model.set_grad(True)，操作，我们要训练的是 flux transformer 的部分，因此在super().__init__的时候传入 `model = transformer`。
 
 另外MindSpore 静态图的写法不支持字典 dict.key 的调用方法，这里一般有两类参数字典需要在初始化处理：
 
 - 前向计算使用到的、存在模型 config 字典里的个别参数，在初始化方法中单独取出
 - 通过训练脚本传入的 args 参数字典，需要使用 `AttrJitWrapper` 转换一下， 这本质上是 dict.key -> dict[key] 的调用转换。
 
-
 ```python
-# 1、涉及到字典调用的模型参数，需要使用的单独取出
-def __init__(.., vae, ...):
-    ...
-    self.vae_config_scaling_factor = vae.config.scaling_factor
-    self.vae_config_shift_factor = vae.config.shift_factor
-    self.vae_config_block_out_channels = vae.config.block_out_channels
-    self.vae_scale_factor = 2 ** (len(self.vae_config_block_out_channels))
-    ...
-
-## 2、args 传参的处理
-
 # AttrJitWrapper 在 mindone.diffusers.training_utils 提供
 @ms.jit_class
 class AttrJitWrapper:
     def __init__(self, **kwargs):
         for name in kwargs:
             setattr(self, name, kwargs[name])
+```
+具体的处理动作如下：
 
-def __init__(..., args, ...):
+```python
+def __init__(.., vae, ..., args, ...):
     ...
+    # 1、涉及到字典调用的模型参数，需要使用的单独取出
+    self.vae_config_scaling_factor = vae.config.scaling_factor
+    self.vae_config_shift_factor = vae.config.shift_factor
+    self.vae_config_block_out_channels = vae.config.block_out_channels
+    self.vae_scale_factor = 2 ** (len(self.vae_config_block_out_channels))
+    ...
+
+    # 2、args 参数组处理
     self.args = AttrJitWrapper(**vars(args))
     ...
 ```

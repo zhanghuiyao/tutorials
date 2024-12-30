@@ -4,7 +4,7 @@ Diffusers是一个用于生成图像、音频甚至3D结构的最先进的预训
 
 本目录下的文章介绍了如何基于MindSpore框架以及 [MindONE.diffusers](https://github.com/mindspore-lab/mindone/tree/master/mindone/diffusers#readme) 组件，实现当前SOTA的文生图 Flux.1 dev的微调训练。
 
-训练中使用到的模型均直接从[MindONE.diffusers](https://github.com/mindspore-lab/mindone/tree/master/mindone/diffusers#readme) 组件加载。整个 diffusers-style 训练流程的开发参考了文档[Run 🤗Diffusers-Style Training on MindSpore](https://gist.github.com/townwish4git/3a181a1884747dfbbe4b31107ec02166)，对 FLUX.1-dev 模型 dreambooth-lora 、controlnet 微调方法作在 mindspore 框架下做对应的具体实践。建议先阅读本自然段给出跳转链接的 2 篇文档。
+训练中使用到的模型均直接从[MindONE.diffusers](https://github.com/mindspore-lab/mindone/tree/master/mindone/diffusers#readme) 组件加载。整个 diffusers-style 训练流程的开发参考了文档 [Run 🤗Diffusers-Style Training on MindSpore](https://gist.github.com/townwish4git/3a181a1884747dfbbe4b31107ec02166)，对 FLUX.1-dev 模型 dreambooth-lora 、controlnet 微调方法作在 mindspore 框架下做对应的具体实践。建议先阅读本自然段给出跳转链接的 2 篇文档。
 
 【本系列持续更新中...】
 
@@ -18,7 +18,7 @@ mindone 仓 [example/diffusers](https://github.com/mindspore-lab/mindone/tree/ma
 - [ ] 模型加载、LoRA层初始化与模块精度设置
 - [ ] Dreambooth LoRA 训练数据集构建
 - [ ] 优化器、优化参数等设置
-- [x] [Flux Dreambooth LoRA 单步训练实现](flux_lora_train_step.md)
+- [x] [Flux Dreambooth LoRA 单步训练实现](flux_dreambooth_lora_train_step.md)
 - [ ] enable textencoder training VS not 实现
 
 

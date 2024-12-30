@@ -70,5 +70,5 @@ class TrainStep(...)
 
 
 扩展阅读
-- [Flux dreambooth lora 单步训练实现](flux_lora_single_train_step.md)
+- [Flux dreambooth lora 单步训练实现](flux_dreambooth_lora_train_step.md)
 - Flux controlnet 单步训练实现（todo）

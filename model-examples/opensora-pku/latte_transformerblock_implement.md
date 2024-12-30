@@ -323,7 +323,7 @@ class BasicTransformerBlock_(nn.Cell):
 
 本文介绍了 Latte 网络中的单个 transformer block 的 MindSpore 实现。
 
-`LatteT2V` 完整 MindSpore 实现代码可参考 `mindone` 仓： [examples/opensora_pku/opensora/models/diffusion/latte](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku/opensora/models/diffusion/latte)
+`LatteT2V` 完整 MindSpore 实现代码可参考 `mindone` 仓： [examples/opensora_pku/opensora/models/diffusion/latte](https://github.com/mindspore-lab/mindone/tree/master/examples/opensora_pku/)
 
 
 `mindone` 套件仓已兼容 diffusers 库， 图片、视频生成扩散模型更一般的 2d、3d transformer block 实现，SD3-mmdit 使用的 joint transformer block 实现等可参考: [`mindone/diffusers/models/attention.py`](https://github.com/mindspore-lab/mindone/blob/master/mindone/diffusers/models/attention.py)
