@@ -22,7 +22,7 @@ flux controlnet 训练：
 
 我们需要在训练脚本中保证其参数的精度是全精度的原因是，使用 mindspore 框架的优化器，比如 `nn.AdamWeightDecay`, 当前是按照参数的精度做梯度更新的，而不会在反向更新权重时自动 upcast。假如训练参数也设置成半精度，变成完全的半精度训练，在梯度更新时可能会导致溢出，无法正常训练。
 
-但是 flux controlnet 微调比较耗性能，训练参数有 1.44B，在未讨论 ZeRO 等并行优化手段时，单卡小卡拉米用户可能会遇到 OOM 问题。我们可以尝试修改优化器，使得优化器在更新计算的时候可以自动 upcast 精度再更新，而存的权重可以保持半精度。虽然优化有限，但也可以节省出一点点显存。
+但是 flux controlnet 微调比较耗性能，训练参数有 1.44B，在未讨论 ZeRO 等并行优化手段时，单卡用户可能会遇到 OOM 问题。我们可以尝试修改优化器，使得优化器在更新计算的时候可以自动 upcast 精度再更新，而存的权重可以保持半精度。虽然优化有限，但也可以节省出一点点显存。
 
 我们可以暂时把 脚本中的 mindspore 框架的 `nn.AdamWeightDecay` 优化器更换成 mindcv 仓实现的adamw https://github.com/mindspore-lab/mindcv/blob/main/mindcv/optim/adamw.py ，则理论上 flux_controlnet 的参数精度应该也可以设为半精度。
 
