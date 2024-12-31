@@ -10,12 +10,12 @@ Diffusers是一个用于生成图像、音频甚至3D结构的最先进的预训
 
 ## 单步训练的抽象类的使用介绍
 mindone 仓 [example/diffusers](https://github.com/mindspore-lab/mindone/tree/master/examples/diffusers) 下提供的一系列 diffusers-style 训练脚本样例，具体的单步训练实现时都依赖这个抽象类。
-- [`TrainStep` in MindONE.diffusers](trainstep_in_mindone_diffusers.md)
+- [x] [`TrainStep` in MindONE.diffusers](trainstep_in_mindone_diffusers.md)
 
 
 ## Dreambooth LoRA 微调流程构建介绍
 完整训练脚本已上库，可参考 [🔗](https://github.com/mindspore-lab/mindone/blob/master/examples/diffusers/dreambooth/README_flux.md)
-- [ ] 模型加载、LoRA层初始化与模块精度设置
+- [x] [模型加载、LoRA层初始化与模块精度设置](flux_lora_load_models.md)
 - [ ] Dreambooth LoRA 训练数据集构建
 - [ ] 优化器、优化参数等设置
 - [x] [Flux Dreambooth LoRA 单步训练实现](flux_dreambooth_lora_train_step.md)
@@ -24,10 +24,15 @@ mindone 仓 [example/diffusers](https://github.com/mindspore-lab/mindone/tree/ma
 
 ## Controlnet 微调流程构建介绍
 完整训练脚本待上库，稍后补充🔗
-- [ ] 模型加载、Controlnet层初始化与各模块精度设置
+- [x] [模型加载、Controlnet层初始化与各模块精度设置](flux_controlnet_load_models.md)
+- [ ] [尝试更换可 upcast 精度的优化器](flux_controlnet_precison_setting.md)
 - [ ] Flux Controlnet 单步训练实现
 
 ## 扩展阅读
+
 关键模型结构简介与 MindSpore 代码实现走读:
 - [ ] `FluxTransformer2DModel` 实现
 - [ ] `FluxControlNetModel` 实现
+
+其他问题：
+- [x] [手动下载预训练模型配置文件时的小坑](mannual_download_models_faq.md)
