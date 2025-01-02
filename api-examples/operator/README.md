@@ -13,6 +13,7 @@
 | [ops.all](./ops.all.ipynb) | 矩阵与向量相乘后加上input | Reduction函数
 | [ops.angle](./ops.angle.ipynb) | 计算复数Tensor的辐角 | element-wise
 | [ops.any](./ops.any.ipynb) | 返回指定维度是否含有True | Reduction函数
+| [ops.arange](./ops.arange.ipynb) | 创建指定起止和步长的序列 | 创建
 | [ops.arccos](./ops.arccos.ipynb) | 计算反余弦 | element-wise
 | [ops.arccosh](./ops.arccosh.ipynb) | 计算反双曲余弦 | element-wise
 | [ops.arcsin](./ops.arcsinh.ipynb) | 计算反正弦 | element-wise
@@ -28,10 +29,14 @@
 | [ops.atan](./ops.atan.ipynb) | 计算反正切值 | element-wise
 | [ops.atan2](./ops.atan2.ipynb) | 计算input/other的反正切值 | element-wise
 | [ops.atanh](./ops.atanh.ipynb) | 计算反双曲正切值 | element-wise
+| [ops.atleast_1d](./ops.atleast_1d.ipynb) | 将输入转换为至少具有1维的tensor | element-wise
+| [ops.atleast_2d](./ops.atleast_2d.ipynb) | 将输入转换为至少具有2维的tensor | element-wise
+| [ops.atleast_3d](./ops.atleast_3d.ipynb) | 将输入转换为至少具有3维的tensor | element-wise
 | [ops.bitwise_and](./ops.bitwise_and.ipynb) | 两个Tensor的与运算 | element-wise
 | [ops.bitwise_left_shift](./ops.bitwise_left_shift.ipynb) | 对输入进行左移位运算 | element-wise
 | [ops.bitwise_or](./ops.bitwise_or.ipynb) | 两个Tensor的或运算 | element-wise
 | [ops.bitwise_right_shift](./ops.bitwise_right_shift.ipynb) | 对输入进行右移位运算 | element-wise
 | [ops.bitwise_xor](./ops.bitwise_xor.ipynb) | 两个Tensor的异或运算 | element-wise
+| [ops.ceil](./ops.ceil.ipynb) | 对输入做向上取整 | element-wise
 
 
