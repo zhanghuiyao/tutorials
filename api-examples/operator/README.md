@@ -38,5 +38,25 @@
 | [ops.bitwise_right_shift](./ops.bitwise_right_shift.ipynb) | 对输入进行右移位运算 | element-wise
 | [ops.bitwise_xor](./ops.bitwise_xor.ipynb) | 两个Tensor的异或运算 | element-wise
 | [ops.ceil](./ops.ceil.ipynb) | 对输入做向上取整 | element-wise
+| [ops.clamp](./ops.clamp.ipynb) | 将输入的值裁剪到指定的最小值和最大值之间 | element-wise
+| [ops.clip](./ops.clip.ipynb) | 将输入的值裁剪到指定的最小值和最大值之间 | element-wise
+| [ops.conj](./ops.conj.ipynb) | 计算输入的共轭 | element-wise
+| [ops.cos](./ops.cos.ipynb) | 计算输入的余弦 | element-wise
+| [ops.cosh](./ops.cosh.ipynb) | 计算双曲余弦值 | element-wise
+| [ops.cummax](./ops.cummax.ipynb) | 返回输入沿维度的累积最大值及最大值的索引 | Reduction函数
+| [ops.cummin](./ops.cummin.ipynb) | 返回输入沿维度的累积最小值及最小值的索引 | Reduction函数
+| [ops.cumprod](./ops.cumprod.ipynb) | 返回输入维度上的累积乘积 | Reduction函数
+| [ops.cumsum](./ops.cumsum.ipynb) | 返回输入维度上的累积和 | Reduction函数
+| [ops.deg2rad](./ops.deg2rad.ipynb) | 将输入从度数制转换为弧度制 | element-wise
+| [ops.diag](./ops.diag!!!.ipynb) | 用给定的对角线值构造对角线 | Tensor
+| [ops.diagonal](./ops.diagonal.ipynb) |  返回特定的对角线视图 | Tensor
+| [ops.div](./ops.div.ipynb) | 计算第一个输入除以第二输入的商 | element-wise
+| [ops.divide](./ops.divide.ipynb) |  计算第一个输入除以第二输入的商 | element-wise
+| [ops.equal](./ops.equal.ipynb) |  比较两个输入Tensor是否相等 | element-wise
+| [ops.erf](./ops.erf.ipynb) |  比较两个输入Tensor是否相等 | element-wise
+| [ops.erfinv](./ops.erfinv.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.exp](./ops.exp.ipynb) |  计算输入的指数 | element-wise
+| [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | element-wise
 
 
+ 
