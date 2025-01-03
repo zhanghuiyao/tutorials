@@ -47,12 +47,16 @@
 | [ops.cummin](./ops.cummin.ipynb) | 返回输入沿维度的累积最小值及最小值的索引 | Reduction函数
 | [ops.cumprod](./ops.cumprod.ipynb) | 返回输入维度上的累积乘积 | Reduction函数
 | [ops.cumsum](./ops.cumsum.ipynb) | 返回输入维度上的累积和 | Reduction函数
-| [ops.deg2rad](./ops.deg2rad.ipynb) | 将输入从度数制转换为弧度制 | Reduction函数
-| [ops.diag](./ops.diag!!!.ipynb) | 用给定的对角线值构造对角线 | Reduction函数
-| [ops.diagonal](./ops.diagonal.ipynb) |  返回特定的对角线视图 | Reduction函数
-| [ops.div](./ops.div.ipynb) | 计算第一个输入除以第二输入的商 | Reduction函数
-| [ops.divide](./ops.divide.ipynb) |  计算第一个输入除以第二输入的商 | Reduction函数
-| [ops.rad2deg](./ops.rad2deg.ipynb) | 将输入从弧度制转换为度数制 | Reduction函数
+| [ops.deg2rad](./ops.deg2rad.ipynb) | 将输入从度数制转换为弧度制 | element-wise
+| [ops.diag](./ops.diag!!!.ipynb) | 用给定的对角线值构造对角线 | Tensor
+| [ops.diagonal](./ops.diagonal.ipynb) |  返回特定的对角线视图 | Tensor
+| [ops.div](./ops.div.ipynb) | 计算第一个输入除以第二输入的商 | element-wise
+| [ops.divide](./ops.divide.ipynb) |  计算第一个输入除以第二输入的商 | element-wise
+| [ops.equal](./ops.equal.ipynb) |  比较两个输入Tensor是否相等 | element-wise
+| [ops.erf](./ops.erf.ipynb) |  比较两个输入Tensor是否相等 | element-wise
+| [ops.erfinv](./ops.erfinv.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.exp](./ops.exp.ipynb) |  计算输入的指数 | element-wise
+| [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | element-wise
 
 
-
+ 
