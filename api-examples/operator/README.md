@@ -37,6 +37,7 @@
 | [ops.bitwise_or](./ops.bitwise_or.ipynb) | 两个Tensor的或运算 | element-wise
 | [ops.bitwise_right_shift](./ops.bitwise_right_shift.ipynb) | 对输入进行右移位运算 | element-wise
 | [ops.bitwise_xor](./ops.bitwise_xor.ipynb) | 两个Tensor的异或运算 | element-wise
+| [ops.broadcast_to](./ops.broadcast_to.ipynb) | 将输入广播到目标shape | element-wise
 | [ops.ceil](./ops.ceil.ipynb) | 对输入做向上取整 | element-wise
 | [ops.clamp](./ops.clamp.ipynb) | 将输入的值裁剪到指定的最小值和最大值之间 | element-wise
 | [ops.clip](./ops.clip.ipynb) | 将输入的值裁剪到指定的最小值和最大值之间 | element-wise
@@ -55,8 +56,15 @@
 | [ops.equal](./ops.equal.ipynb) |  比较两个输入Tensor是否相等 | element-wise
 | [ops.erf](./ops.erf.ipynb) |  比较两个输入Tensor是否相等 | element-wise
 | [ops.erfinv](./ops.erfinv.ipynb) |  计算输入的逆误差函数 | element-wise
-| [ops.exp](./ops.exp.ipynb) |  计算输入的指数 | element-wise
-| [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | element-wise
+| [ops.exp](./ops.exp!!!.ipynb) |  计算输入的指数 | element-wise
+| [ops.expm1](./ops.expm!.ipynb) | 计算输入的指数再减一 | element-wise
+| [ops.flatten](./ops.flatten.ipynb) | 沿着start_dim到end_dim的维度对输入Tensor展平 | 神经网络
+| [ops.floor_div](./ops.floor_div.ipynb) | 第一个输入除以第二个输入再向下取整 | element-wise
+| [ops.floor_divide](./ops.floor_divide.ipynb) | 第一个输入除以第二个输入再向下取整 | element-wise
+| [ops.floor](./ops.floor.ipynb) | 逐元素向下取整 | element-wise
+| [ops.greater_equal](./ops.greater_equal.ipynb) |  比较第一个输入是否大于等于第二个输入 | 比较函数
+| [ops.greater](./ops.greater.ipynb) |  比较第一个输入是否大于第二个输入 | 比较函数
+| [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | 比较函数
 
 
  
