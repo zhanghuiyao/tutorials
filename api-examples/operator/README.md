@@ -64,7 +64,13 @@
 | [ops.floor](./ops.floor.ipynb) | 逐元素向下取整 | element-wise
 | [ops.greater_equal](./ops.greater_equal.ipynb) |  比较第一个输入是否大于等于第二个输入 | 比较函数
 | [ops.greater](./ops.greater.ipynb) |  比较第一个输入是否大于第二个输入 | 比较函数
+| [ops.inner](./ops.inner.ipynb) | 计算输入的的高斯误差 | 比较函数
+| [ops.isclose](./ops.isclose.ipynb) | 计算输入的的高斯误差 | 比较函数
+| [ops.isfinite](./ops.isfinite.ipynb) | 判断输入数据的每个元素是否是有限数 | 比较函数
+| [ops.isinf](./ops.isinf.ipynb) | 判断输入数据的每个元素是否是无限数 | 比较函数
+| [ops.isnan](./ops.isnan.ipynb) | 判断输入数据的每个元素是否是nan值 | 比较函数
+| [ops.isneginf](./ops.isneginf.ipynb) | 判断输入数据的每个元素是否是负无限数| 比较函数
+| [ops.isposinf](./ops.isposinf.ipynb) | 判断输入数据的每个元素是否是正无限数 | 比较函数
 | [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | 比较函数
-
 
  
