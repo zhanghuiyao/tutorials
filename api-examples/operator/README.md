@@ -42,6 +42,9 @@
 | [ops.clamp](./ops.clamp.ipynb) | 将输入的值裁剪到指定的最小值和最大值之间 | element-wise
 | [ops.clip](./ops.clip.ipynb) | 将输入的值裁剪到指定的最小值和最大值之间 | element-wise
 | [ops.conj](./ops.conj.ipynb) | 计算输入的共轭 | element-wise
+| [ops.conv1d](./ops.conv1d.ipynb) | 计算输入Tensor一维卷积 | element-wise
+| [ops.conv2d](./ops.conv2d.ipynb) | 计算输入Tensor二维卷积 | element-wise
+| [ops.conv3d](./ops.conv3d.ipynb) | 计算输入Tensor三维卷积 | element-wise
 | [ops.cos](./ops.cos.ipynb) | 计算输入的余弦 | element-wise
 | [ops.cosh](./ops.cosh.ipynb) | 计算双曲余弦值 | element-wise
 | [ops.cummax](./ops.cummax.ipynb) | 返回输入沿维度的累积最大值及最大值的索引 | Reduction函数
