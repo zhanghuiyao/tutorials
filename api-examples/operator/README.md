@@ -60,11 +60,12 @@
 | [ops.erf](./ops.erf.ipynb) |  比较两个输入Tensor是否相等 | element-wise
 | [ops.erfinv](./ops.erfinv.ipynb) |  计算输入的逆误差函数 | element-wise
 | [ops.exp](./ops.exp!!!.ipynb) |  计算输入的指数 | element-wise
-| [ops.expm1](./ops.expm!.ipynb) | 计算输入的指数再减一 | element-wise
+| [ops.expm1](./ops.expm1.ipynb) | 计算输入的指数再减一 | element-wise
 | [ops.flatten](./ops.flatten.ipynb) | 沿着start_dim到end_dim的维度对输入Tensor展平 | 神经网络
 | [ops.floor_div](./ops.floor_div.ipynb) | 第一个输入除以第二个输入再向下取整 | element-wise
 | [ops.floor_divide](./ops.floor_divide.ipynb) | 第一个输入除以第二个输入再向下取整 | element-wise
 | [ops.floor](./ops.floor.ipynb) | 逐元素向下取整 | element-wise
+| [ops.full](./ops.full!!!.ipynb) | 创建一个指定shape的Tensor，并用指定值填充 | 创建
 | [ops.greater_equal](./ops.greater_equal.ipynb) |  比较第一个输入是否大于等于第二个输入 | 比较函数
 | [ops.greater](./ops.greater.ipynb) |  比较第一个输入是否大于第二个输入 | 比较函数
 | [ops.inner](./ops.inner.ipynb) | 计算输入的的高斯误差 | 比较函数
@@ -74,6 +75,30 @@
 | [ops.isnan](./ops.isnan.ipynb) | 判断输入数据的每个元素是否是nan值 | 比较函数
 | [ops.isneginf](./ops.isneginf.ipynb) | 判断输入数据的每个元素是否是负无限数| 比较函数
 | [ops.isposinf](./ops.isposinf.ipynb) | 判断输入数据的每个元素是否是正无限数 | 比较函数
+| [ops.less_equal](./ops.less_equal.ipynb) |  比较第一个输入是否小于等于第二个输入 | 比较函数
+| [ops.less](./ops.less.ipynb) |  比较第一个输入是否小于第二个输入 | 比较函数
+| [ops.log](./ops.log.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.log1p](./ops.log1p.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.log2](./ops.log2.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.log10](./ops.log10.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.logaddexp](./ops.logaddexp.ipynb) |  计算输入的逆误差函数 | element-wise
+| [ops.logical_and](./ops.logical_and.ipynb) |  计算两个输入的逻辑与 | element-wise
+| [ops.logical_not](./ops.logical_not.ipynb) |  计算输入的逻辑非 | element-wise
+| [ops.logical_or](./ops.logical_or.ipynb) |  计算两个输入的逻辑或 | element-wise
+| [ops.logsumexp](./ops.logsumexp.ipynb) |  按指定维度对输入求对数指数和 | element-wise
+| [ops.matmul](./ops.matmul.ipynb) |  计算两个输入的矩阵乘积 | 线性代数
+| [ops.max](./ops.max.ipynb) |  返回给定轴上的最大值及其索引 | Reduction函数
+| [ops.maximum](./ops.maximum.ipynb) |  计算两个输入中的最大值 | 比较函数
+| [ops.mean](./ops.mean.ipynb) |  返回输入所有元素的平均值 | 比较函数
+| [ops.min](./ops.min.ipynb) |  计算两个输入中的最小值  | 比较函数
+| [ops.minimum](./ops.minimum.ipynb) |  返回给定轴上的最小值及其索引 | Reduction函数
+| [ops.mul](./ops.mul.ipynb) |  计算两个Tensor逐元素相乘| element-wise
+| [ops.multiply](./ops.multiply.ipynb) |  计算两个Tensor逐元素相乘。 | element-wise
+| [ops.neg](./ops.neg.ipynb) |  计算输入的相反数 | element-wise
+| [ops.negative](./ops.negative.ipynb) |  计算输入的相反数 | element-wise
+| [ops.ones](./ops.ones.ipynb) | 创建一个值全为1的Tensor | element-wise
+| [ops.ones_like](./ops.ones_like.ipynb) |  返回值为1的Tensor，shape与输入相同 | element-wise
+| [ops.pow](./ops.pow!!!.ipynb) |  计算input中每个元素的exponent次幂 | element-wise
+| [ops.prod](./ops.prod.ipynb) |  返回给定维度中输入每一行的乘积 | Reduction函数
 | [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | 比较函数
 
- 
