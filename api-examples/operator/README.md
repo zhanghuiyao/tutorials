@@ -94,6 +94,7 @@
 | [ops.minimum](./ops.minimum.ipynb) |  返回给定轴上的最小值及其索引 | Reduction函数
 | [ops.mul](./ops.mul.ipynb) |  计算两个Tensor逐元素相乘| element-wise
 | [ops.multiply](./ops.multiply.ipynb) |  计算两个Tensor逐元素相乘。 | element-wise
+| [ops.nan_to_num](./ops.nan_to_num!!!.ipynb) |  计算两个Tensor逐元素相乘。 | element-wise
 | [ops.neg](./ops.neg.ipynb) |  计算输入的相反数 | element-wise
 | [ops.negative](./ops.negative.ipynb) |  计算输入的相反数 | element-wise
 | [ops.ones](./ops.ones.ipynb) | 创建一个值全为1的Tensor | element-wise
@@ -101,4 +102,19 @@
 | [ops.pow](./ops.pow!!!.ipynb) |  计算input中每个元素的exponent次幂 | element-wise
 | [ops.prod](./ops.prod.ipynb) |  返回给定维度中输入每一行的乘积 | Reduction函数
 | [ops.rad2deg](./ops.rad2deg.ipynb) | 计算输入的的高斯误差 | 比较函数
+| [ops.sign](./ops.sign.ipynb) |  返回正负1或0，代表输入的正负或0 | element-wise
+| [ops.sin](./ops.sin.ipynb) |  计算输入的正弦值 | element-wise
+| [ops.sinh](./ops.sinh.ipynb) |  计算输入的双曲正弦值 | element-wise
+| [ops.softmax](./ops.softmax.ipynb) | 指定轴上对输入做Softmax归一化操作 | element-wise
+| [ops.sort](./ops.sort.ipynb) | 指定轴上对输入做Softmax归一化操作 | 比较函数
+| [ops.split](./ops.split.ipynb) | 指定轴上对输入做Softmax归一化操作 | 索引、切片、连接、变形
+| [ops.sqrt](./ops.sqrt.ipynb) | 返回输入的平方根 | element-wise
+| [ops.square](./ops.square.ipynb) | 返回输入的平方 | element-wise
+| [ops.squeeze](./ops.squeeze.ipynb) | 返回删除指定维度中大小为1的维度后的Tensor | 索引、切片、连接、变形
+| [ops.std](./ops.std.ipynb) | 按指定维度计算标准差 | Reduction函数
+| [ops.subtract](./ops.subtract.ipynb) | 对两个输入进行减法操作 | element-wise
+| [ops.sum](./ops.sum.ipynb) | 按指定维度计算元素和 | Tensor
+| [ops.tan](./ops.tan.ipynb) |  计算输入的正切值 | element-wise
+| [ops.tanh](./ops.tanh.ipynb) |  计算输入的双曲正切值 | element-wise
+
 
