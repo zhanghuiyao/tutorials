@@ -1,15 +1,17 @@
-# sgd 优化器
+# 从零开始写一个简单的sgd优化器
 
-> 基于 MindSpore 2.4.0 版本
+> 备注：以下示例使用的是 MindSpore 2.4.0 版本
 
-## guide
+## 目录
 
-- [从0开始创建一个sgd优化器](#从0开始创建一个sgd优化器)
-- [加速]()
+- [从零开始创建一个sgd优化器](#section1)
+- [加速](#section2)
 
-## 从0开始创建一个sgd优化器
 
-- 第一步：定义sgd优化过程
+<a id="section1"></a>
+## 从零开始创建一个`sgd`优化器
+
+- 第一步：定义`sgd`优化过程
 
     ```python
     from mindspore import ops
@@ -58,9 +60,10 @@
                 ops.assign(w, w - self.lr * dw)
     ```
 
+<a id="section2"></a>
 ## 加速
 
-- 使用 JIT(Just-In-Time) 编译加速
+- 使用 `JIT(Just-In-Time)` 编译加速
 
   ```python
   import mindspore
@@ -72,7 +75,7 @@
           self.weights = weights
           self.lr = lr
   
-  +    @mindspore.jit
+      @mindspore.jit
       def construct(self, grads):
           for w, dw in self.weights, grads:
               ops.assign(w, w - self.lr * dw)
@@ -80,33 +83,31 @@
 
 - 使用 `mindspore.ops.HyperMap` 操作替换 `for` 循环
 
-  ```diff
+  ```python
   import mindspore
   from mindspore import nn, ops
   
-  +sgd_update = ops.MultitypeFuncGraph("_sgd_update")
-  +
-  +@sgd_update.register("Tensor", "Tensor", "Tensor")
-  +def run_sgd_update(lr, grad, weight):
-  +    """Apply sgd optimizer to the weight parameter using Tensor."""
-  +    success = True
-  +    ops.depend(success, ops.assign(weight, weight - lr * grad))
-  +    return success
+  sgd_update = ops.MultitypeFuncGraph("_sgd_update")
+  
+  @sgd_update.register("Tensor", "Tensor", "Tensor")
+  def run_sgd_update(lr, grad, weight):
+      """Apply sgd optimizer to the weight parameter using Tensor."""
+      success = True
+      ops.depend(success, ops.assign(weight, weight - lr * grad))
+      return success
   
   class SGD(nn.Cell):
       def __init__(self, weights, lr):
           super(SGD, self).__init__()
           self.weights = weights
           self.lr = lr
-  +        self.hyper_map = ops.HyperMap()
+          self.hyper_map = ops.HyperMap()
   
       @mindspore.jit
       def construct(self, grads):
-  -        for w, dw in self.weights, grads:
-  -            ops.assign(w, w - self.lr * dw)
-  +        return self.hyper_map(
-  +            ops.partial(sgd_update, self.lr),
-  +            self.weights,
-  +            grads
-  +        )
+          return self.hyper_map(
+              ops.partial(sgd_update, self.lr),
+              self.weights,
+              grads
+          )
   ```
