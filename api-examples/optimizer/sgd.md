@@ -62,7 +62,7 @@
 
 - 使用 JIT(Just-In-Time) 编译加速
 
-  ```pycon
+  ```python
   import mindspore
   from mindspore import nn, ops
   
