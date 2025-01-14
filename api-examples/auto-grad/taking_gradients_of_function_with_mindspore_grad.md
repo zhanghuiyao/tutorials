@@ -6,7 +6,7 @@
 
 - [使用`mindspore.grad`对函数进行求导](#section1)
 - [使用`mindspore.grad`计算线性逻辑回归的梯度](#section2)
-- [使用`mindspore.value_and_grad`计算梯度与数值](#section3)
+- [使用`mindspore.value_and_grad`计算梯度与损失](#section3)
 
 <br>
 
@@ -34,7 +34,7 @@ dfdx = grad(f)
 d2fdx = grad(grad(f))
 ```
 
-当`x=1`时，对上述内容进行评估可以得到：
+当`x=1`时，对上述内容进行验证可以得到：
 
 $$
 \begin{aligned}
@@ -44,7 +44,7 @@ $$
 \end{aligned}
 $$
 
-使用MindSpore:
+在MindSpore中运行:
 
 ```python
 print(f(Tensor(1.0)))
@@ -137,7 +137,7 @@ print(f'W_grad: {W_grad}, b_grad: {b_grad}')
 
 
 <a id="section3"></a>
-## 使用`mindspore.value_and_grad`计算梯度与数值
+## 使用`mindspore.value_and_grad`计算梯度与损失
 
 计算线性逻辑回归函数的梯度，并获取`loss`：
 
