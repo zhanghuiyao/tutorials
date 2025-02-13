@@ -29,3 +29,13 @@
 ### AIGC/文生音频
 
 - (TODO) MusicGen 介绍与推理实现
+
+
+### LLMs/大模型
+
+- (TODO) DeepSeek V3 关键技术介绍
+
+
+### Reasoning/推理
+
+- [Mini DeepSeek R1 Zero 从零到一实践](./reasoning-models/mini-r1-zero/README.md)
