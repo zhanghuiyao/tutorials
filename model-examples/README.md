@@ -38,4 +38,6 @@
 
 ### Reasoning/推理
 
+- [目录](./reasoning-models/README.md)
+
 - [Mini DeepSeek R1 Zero 从零到一实践](./reasoning-models/mini-r1-zero/README.md)
