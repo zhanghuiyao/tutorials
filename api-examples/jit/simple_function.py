@@ -24,14 +24,14 @@ jitted_by_bytecode_and_ge_f = jit(f, capture_mode="bytecode", backend="GE")
 
 
 ######################################################################################################
-# !!! jit by trace must be use the registry method !!!
 
+# FIXME: 1. jit by trace must be use the registry method?
 # jitted_by_trace_and_levelO0_f = jit(f, capture_mode="trace", jit_level="O0")
 # jitted_by_trace_and_levelO1_f = jit(f, capture_mode="trace", jit_level="O1")
 # jitted_by_trace_and_ge_f = jit(f, capture_mode="trace", backend="GE")
 
 
-# 
+# FIXME: 2. jit by trace do not support python *input?
 # @jit(capture_mode="trace", jit_level="O0")
 # def jitted_by_trace_and_levelO0_f(*input):
 #     return f(*input)
@@ -47,6 +47,7 @@ def jitted_by_trace_and_levelO1_f(a, b, c):
 @jit(capture_mode="trace", backend="GE")
 def jitted_by_trace_and_ge_f(a, b, c):
     return a * b + c
+
 ######################################################################################################
 
 
