@@ -24,8 +24,7 @@ def run_func(f: Callable, des:str = "function"):
     time_to_run_thousand_times = time.time() - s_time
 
     s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
-    print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
-          f"time end to end(a thousand times): {time_to_prepare+time_to_run_thousand_times:.2f}")
+    print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
 
 
 class BasicBlock(nn.Cell):
