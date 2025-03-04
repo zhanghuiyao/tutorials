@@ -64,13 +64,13 @@ def run_func(block: nn.Cell, des:str = "function"):
     time_to_compile = time.time() - s_time
     s_time = time.time()
 
-    for _ in range(10):
+    for _ in range(1000):
         out = block(x)
 
-    time_to_run_hundred_times = time.time() - s_time
+    time_to_run_thousand_times = time.time() - s_time
 
-    print(f"{des}, output shape is: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run hundred times: {time_to_run_hundred_times:.2f}s, "
-          f"time end to end(a hundred times): {time_to_compile+time_to_run_hundred_times:.2f}")
+    print(f"{des}, output shape is: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
+          f"time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
 
 
 block = BasicBlock()
