@@ -75,7 +75,7 @@ def run_func(block: nn.Cell, des:str = "function"):
 
 block = BasicBlock()
 
-# run_func(block, des="origin block")
+run_func(block, des="origin block")
 
 block.construct = mindspore.jit(block.construct)
 
