@@ -26,10 +26,17 @@ we define `funtion(a,b,c)=a*b+c`, and warp it by `mindspore.jit`, run by `GLOG_v
 | true  | -     | ast        | ge            | true  | ~0.13s | ~0.89s   | ~1.03s    |
 
 
-> ⚠️ Note:
-> 
-> 0. the above results vary greatly for different devices and device states, data only for reference.
-> 1. *time to compile, potential jitted object reuse may lead to inaccurate comparison.
-> 2. *time to run thousand times, potential asynchronous execution operations may lead to inaccurate testing times.
-> 3. *time end to end, due to the first and second points, the time may not be accurate.
+#### ⚠️ Note:
+
+0. the above results vary greatly for different devices and device states, data only for reference.
+1. *time to compile, potential jitted object reuse may lead to inaccurate comparison.
+2. *time to run thousand times, potential asynchronous execution operations may lead to inaccurate testing times.
+3. *time end to end, due to the first and second points, the time may not be accurate.
+
+
+#### ⚠️ Limitations:
+
+1. mindspore.jit can not compile with temporary source code in terminal, must run as a `.py` file.
+2. jit by trace must be use the registry method?
+3. jit by trace do not support python *input?
 
