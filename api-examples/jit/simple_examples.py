@@ -27,11 +27,21 @@ jitted_by_bytecode_and_levelO1_f = jit(f, capture_mode="bytecode", jit_level="O1
 jitted_by_bytecode_and_ge_f = jit(f, capture_mode="bytecode", backend="GE")
 
 
-jitted_by_trace_and_levelO0_f = jit(f, capture_mode="trace", jit_level="O0")
+# jitted_by_trace_and_levelO0_f = jit(f, capture_mode="trace", jit_level="O0")
+# jitted_by_trace_and_levelO1_f = jit(f, capture_mode="trace", jit_level="O1")
+# jitted_by_trace_and_ge_f = jit(f, capture_mode="trace", backend="GE")
 
-jitted_by_trace_and_levelO1_f = jit(f, capture_mode="trace", jit_level="O1")
+@jit(capture_mode="trace", jit_level="O0")
+def jitted_by_trace_and_levelO0_f(a, b, c):
+    return a * b + c
 
-jitted_by_trace_and_ge_f = jit(f, capture_mode="trace", backend="GE")
+@jit(capture_mode="trace", jit_level="O1")
+def jitted_by_trace_and_levelO1_f(a, b, c):
+    return a * b + c
+
+@jit(capture_mode="trace", backend="GE")
+def jitted_by_trace_and_ge_f(a, b, c):
+    return a * b + c
 
 
 jitted_by_ast_and_levelO0_fullgraph_f = jit(f, capture_mode="ast", jit_level="O0", fullgraph=True)
