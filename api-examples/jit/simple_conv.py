@@ -6,8 +6,6 @@ from functools import partial
 import mindspore
 from mindspore import ops, nn, Tensor
 
-# run synchronize
-mindspore.runtime.launch_blocking()
 
 x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
 
@@ -17,7 +15,7 @@ def run_func(f: Callable, des:str = "function"):
 
     out = f(x)
 
-    time_to_compile = time.time() - s_time
+    time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
@@ -26,8 +24,8 @@ def run_func(f: Callable, des:str = "function"):
     time_to_run_thousand_times = time.time() - s_time
 
     s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
-    print(f"{des}, output shape is: {s_out_shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
-          f"time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
+    print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
+          f"time end to end(a thousand times): {time_to_prepare+time_to_run_thousand_times:.2f}")
 
 
 class BasicBlock(nn.Cell):

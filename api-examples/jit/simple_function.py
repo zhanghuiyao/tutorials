@@ -5,9 +5,6 @@ import mindspore
 from mindspore import jit, ops, nn, Tensor
 
 
-# run synchronize
-mindspore.runtime.launch_blocking()
-
 f_input = [Tensor(np.full((2, 3), i), mindspore.float32) for i in range(3)]
 
 print(f"function input: {f_input}")
@@ -87,16 +84,14 @@ for s, f in function_dict.items():
     s_time = time.time()
     
     out = f(*f_input)
-    mindspore.runtime.synchronize()
 
-    time_to_compile = time.time() - s_time
+    time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
         out = f(*f_input)
-        mindspore.runtime.synchronize()
     
     time_to_run_thousand_times = time.time() - s_time
 
-    print(f"{s}, out shape: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
+    print(f"{s}, out shape: {out.shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
 
