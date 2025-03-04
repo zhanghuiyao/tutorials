@@ -5,6 +5,9 @@ import mindspore
 from mindspore import jit, ops, nn, Tensor
 
 
+# run synchronize
+mindspore.runtime.launch_blocking()
+
 f_input = [Tensor(np.full((2, 3), i), mindspore.float32) for i in range(3)]
 
 print(f"function input: {f_input}")

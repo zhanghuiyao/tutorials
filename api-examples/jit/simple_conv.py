@@ -6,6 +6,8 @@ from functools import partial
 import mindspore
 from mindspore import ops, nn, Tensor
 
+# run synchronize
+mindspore.runtime.launch_blocking()
 
 x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
 
