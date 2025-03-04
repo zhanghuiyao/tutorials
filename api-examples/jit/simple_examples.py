@@ -13,8 +13,7 @@ def f(a, b, c):
     return a * b + c
 
 jitted_defult_f = jit(f)
-
-jitted_by_ast_and_levelO0_f = jit(f, capture_mode="ast", jit_level="O0")
+# jitted_by_ast_and_levelO0_f = jit(f, capture_mode="ast", jit_level="O0")
 
 jitted_by_ast_and_levelO1_f = jit(f, capture_mode="ast", jit_level="O1")
 
@@ -44,9 +43,8 @@ jitted_by_ast_and_ge_fullgraph_f = jit(f, capture_mode="ast", backend="GE", full
 
 function_dict = {
     "function": f,
-    "function jitted by default": jitted_defult_f,
     
-    "function jitted by ast and levelO0": jitted_by_ast_and_levelO0_f,
+    "function jitted by ast and levelO0": jitted_defult_f,
     "function jitted by ast and levelO1": jitted_by_ast_and_levelO1_f,
     "function jitted by ast and ge": jitted_by_ast_and_ge_f,
     
@@ -69,13 +67,15 @@ function_dict = {
 for s, f in function_dict.items():
     s_time = time.time()
     
-    out = f(*f_input)
+    # out = f(*f_input)
+    out = f(f_input[0], f_input[1], f_input[2])
     
     time_to_compile = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
-        out = f(*f_input)
+        # out = f(*f_input)
+        out = f(f_input[0], f_input[1], f_input[2])
     
     time_to_run_thousand_times = time.time() - s_time
 
