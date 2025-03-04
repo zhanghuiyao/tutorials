@@ -23,7 +23,8 @@ def run_func(f: Callable, des:str = "function"):
 
     time_to_run_thousand_times = time.time() - s_time
 
-    print(f"{des}, output shape is: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
+    s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
+    print(f"{des}, output shape is: {s_out_shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
           f"time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
 
 
@@ -86,7 +87,7 @@ def fp(x):
 
 def fp_and_bp(x):
     out, grads = grad_fn(x)
-    return out
+    return out, grads
 
 
 # run origin block
