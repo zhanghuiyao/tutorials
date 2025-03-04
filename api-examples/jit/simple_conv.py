@@ -69,16 +69,13 @@ def run_func(block: nn.Cell, des:str = "function"):
 
     time_to_run_ten_times = time.time() - s_time
 
-    print(f"{des}, \
-          output shape is: {out.shape}, \
-          time to compile: {time_to_compile:.2f}s, \
-          time to run thousand times: {time_to_run_ten_times:.2f}s, \
+    print(f"{des}, output shape is: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_ten_times:.2f}s, 
           time end to end(a thousand times): {time_to_compile+time_to_run_ten_times:.2f}")
 
 
 block = BasicBlock()
 
-run_func(block, des="origin block")
+# run_func(block, des="origin block")
 
 block.construct = mindspore.jit(block.construct)
 
