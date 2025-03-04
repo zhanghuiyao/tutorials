@@ -10,6 +10,23 @@ from mindspore import ops, nn, Tensor
 x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
 
 
+def run_func(fn: Callable, des:str = "function"):
+    s_time = time.time()
+
+    out = block(x)
+
+    time_to_compile = time.time() - s_time
+    s_time = time.time()
+
+    for _ in range(1000):
+        out = block(x)
+
+    time_to_run_thousand_times = time.time() - s_time
+
+    print(f"{des}, output shape is: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
+          f"time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
+
+
 class BasicBlock(nn.Cell):
     """define the basic block of resnet"""
     expansion: int = 1
@@ -57,37 +74,27 @@ class BasicBlock(nn.Cell):
 
         return out
 
-def fp_and_bp(grad_fn):
-    out, grads = grad_fn(x)
-    return out
-
-def run_func(block: Union[nn.Cell, Callable], des:str = "function"):
-    s_time = time.time()
-
-    out = block(x)
-
-    time_to_compile = time.time() - s_time
-    s_time = time.time()
-
-    for _ in range(1000):
-        out = block(x)
-
-    time_to_run_thousand_times = time.time() - s_time
-
-    print(f"{des}, output shape is: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, "
-          f"time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
-
 
 block = BasicBlock()
 grad_fn = mindspore.value_and_grad(block, None, block.trainable_params(), has_aux=False)
 
-run_func(block, des="origin block fp")
 
-run_func(partial(fp_and_bp, grad_fn), des="origin block fp+bp")
+def fp(x):
+    out = block(x)
+    return out
 
-block.construct = mindspore.jit(block.construct)
 
-run_func(block, des="jitted block by default fp")
+def fp_and_bp(x):
+    out, grads = grad_fn(x)
+    return out
 
-run_func(partial(fp_and_bp, grad_fn), des="jitted block by default fp+bp")
+
+# run origin block
+run_func(fp, des="origin block fp")
+run_func(fp_and_bp, des="origin block fp+bp")
+
+
+# run jitted block fp
+run_func(mindspore.jit(fp), des="jitted block by default fp")
+run_func(mindspore.jit(fp_and_bp), des="jitted block by default fp+bp")
 
