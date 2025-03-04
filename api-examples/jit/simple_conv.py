@@ -10,16 +10,16 @@ from mindspore import ops, nn, Tensor
 x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
 
 
-def run_func(fn: Callable, des:str = "function"):
+def run_func(f: Callable, des:str = "function"):
     s_time = time.time()
 
-    out = block(x)
+    out = f(x)
 
     time_to_compile = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
-        out = block(x)
+        out = f(x)
 
     time_to_run_thousand_times = time.time() - s_time
 
