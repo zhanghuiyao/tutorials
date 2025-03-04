@@ -12,48 +12,48 @@ print(f"function input: {f_input}")
 def f(a, b, c):
     return a * b + c
 
-jitted_defult_f = jit(f)
-# jitted_by_ast_and_levelO0_f = jit(f, capture_mode="ast", jit_level="O0")
-jitted_by_ast_and_levelO1_f = jit(f, capture_mode="ast", jit_level="O1")
-jitted_by_ast_and_ge_f = jit(f, capture_mode="ast", backend="GE")
+jitted_defult_f = mindspore.jit(f)
+# jitted_by_ast_and_levelO0_f = mindspore.jit(f, capture_mode="ast", jit_level="O0")
+jitted_by_ast_and_levelO1_f = mindspore.jit(f, capture_mode="ast", jit_level="O1")
+jitted_by_ast_and_ge_f = mindspore.jit(f, capture_mode="ast", backend="GE")
 
 
-jitted_by_bytecode_and_levelO0_f = jit(f, capture_mode="bytecode", jit_level="O0")
-jitted_by_bytecode_and_levelO1_f = jit(f, capture_mode="bytecode", jit_level="O1")
-jitted_by_bytecode_and_ge_f = jit(f, capture_mode="bytecode", backend="GE")
+jitted_by_bytecode_and_levelO0_f = mindspore.jit(f, capture_mode="bytecode", jit_level="O0")
+jitted_by_bytecode_and_levelO1_f = mindspore.jit(f, capture_mode="bytecode", jit_level="O1")
+jitted_by_bytecode_and_ge_f = mindspore.jit(f, capture_mode="bytecode", backend="GE")
 
 
 ######################################################################################################
 
 # FIXME: 1. jit by trace must be use the registry method?
-# jitted_by_trace_and_levelO0_f = jit(f, capture_mode="trace", jit_level="O0")
-# jitted_by_trace_and_levelO1_f = jit(f, capture_mode="trace", jit_level="O1")
-# jitted_by_trace_and_ge_f = jit(f, capture_mode="trace", backend="GE")
+# jitted_by_trace_and_levelO0_f = mindspore.jit(f, capture_mode="trace", jit_level="O0")
+# jitted_by_trace_and_levelO1_f = mindspore.jit(f, capture_mode="trace", jit_level="O1")
+# jitted_by_trace_and_ge_f = mindspore.jit(f, capture_mode="trace", backend="GE")
 
 
 # FIXME: 2. jit by trace do not support python *input?
-# @jit(capture_mode="trace", jit_level="O0")
+# @mindspore.jit(capture_mode="trace", jit_level="O0")
 # def jitted_by_trace_and_levelO0_f(*input):
 #     return f(*input)
 
-@jit(capture_mode="trace", jit_level="O0")
+@mindspore.jit(capture_mode="trace", jit_level="O0")
 def jitted_by_trace_and_levelO0_f(a, b, c):
     return a * b + c
 
-@jit(capture_mode="trace", jit_level="O1")
+@mindspore.jit(capture_mode="trace", jit_level="O1")
 def jitted_by_trace_and_levelO1_f(a, b, c):
     return a * b + c
 
-@jit(capture_mode="trace", backend="GE")
+@mindspore.jit(capture_mode="trace", backend="GE")
 def jitted_by_trace_and_ge_f(a, b, c):
     return a * b + c
 
 ######################################################################################################
 
 
-jitted_by_ast_and_levelO0_fullgraph_f = jit(f, capture_mode="ast", jit_level="O0", fullgraph=True)
-jitted_by_ast_and_levelO1_fullgraph_f = jit(f, capture_mode="ast", jit_level="O1", fullgraph=True)
-jitted_by_ast_and_ge_fullgraph_f = jit(f, capture_mode="ast", backend="GE", fullgraph=True)
+jitted_by_ast_and_levelO0_fullgraph_f = mindspore.jit(f, capture_mode="ast", jit_level="O0", fullgraph=True)
+jitted_by_ast_and_levelO1_fullgraph_f = mindspore.jit(f, capture_mode="ast", jit_level="O1", fullgraph=True)
+jitted_by_ast_and_ge_fullgraph_f = mindspore.jit(f, capture_mode="ast", backend="GE", fullgraph=True)
 
 
 

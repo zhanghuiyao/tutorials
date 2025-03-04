@@ -1,7 +1,7 @@
 
 # JIT
 
-## test simple function examples:
+## 1. test simple function examples
 
 we define `funtion(a,b,c)=a*b+c`, and warp it by `mindspore.jit`, run by `GLOG_v=3 python -u simple_funtion.py`, result is follow:
 
@@ -38,5 +38,17 @@ we define `funtion(a,b,c)=a*b+c`, and warp it by `mindspore.jit`, run by `GLOG_v
 
 1. mindspore.jit can not compile with temporary source code in terminal, must run as a `.py` file.
 2. jit by trace must be use the registry method?
-3. jit by trace do not support python *input?
+3. jit by trace do not support python `*input`?
 
+
+## 2. test simple module examples
+
+### 2.1 simple `conv` blocks
+
+Taking `BasicBlock` used in `resnet` as an example:
+
+
+
+### 2.2 LLMs block
+
+Taking `llama` used in `llama` as an example:
