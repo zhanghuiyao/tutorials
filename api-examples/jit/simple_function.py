@@ -87,12 +87,14 @@ for s, f in function_dict.items():
     s_time = time.time()
     
     out = f(*f_input)
-    
+    mindspore.runtime.synchronize()
+
     time_to_compile = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
         out = f(*f_input)
+        mindspore.runtime.synchronize()
     
     time_to_run_thousand_times = time.time() - s_time
 
