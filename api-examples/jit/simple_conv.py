@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from typing import Optional
+from typing import Optional, Union, Callable
 
 import mindspore
 from mindspore import ops, nn, Tensor
@@ -56,7 +56,11 @@ class BasicBlock(nn.Cell):
 
         return out
 
-def run_func(block: nn.Cell, des:str = "function"):
+def fp_and_bp(grad_fn):
+    out, grads = grad_fn(x)
+    return out
+
+def run_func(block: Union[nn.Cell, Callable], des:str = "function"):
     s_time = time.time()
 
     out = block(x)
@@ -74,10 +78,15 @@ def run_func(block: nn.Cell, des:str = "function"):
 
 
 block = BasicBlock()
+grad_fn = mindspore.value_and_grad(block, None, block.trainable_params(), has_aux=False)
 
-run_func(block, des="origin block")
+run_func(block, des="origin block fp")
+
+run_func(fp_and_bp, des="origin block fp+bp")
 
 block.construct = mindspore.jit(block.construct)
 
-run_func(block, des="jitted block by default")
+run_func(block, des="jitted block by default fp")
+
+run_func(fp_and_bp, des="jitted block by default fp+bp")
 

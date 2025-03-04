@@ -43,12 +43,35 @@ we define `funtion(a,b,c)=a*b+c`, and warp it by `mindspore.jit`, run by `GLOG_v
 
 ## 2. test simple module examples
 
-### 2.1 simple `conv` blocks
+### 2.1. simple `conv` blocks
 
 Taking `BasicBlock` used in `resnet` as an example:
 
+we define `BasicBlock` which use in `resnet`, and warp it by `mindspore.jit`, run by `GLOG_v=3 python -u simple_conv.py`, result is follow:
+
+#### 2.1.1. forward
+
+| enable jit | jit level | capture mode | backend | fullgraph | *time to compile | *time to run thousand times | *time end to end(a thousand times) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| false | -     | -          | -             | -     | ~6.06s | ~1.47s    | ~7.53s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.33s | ~0.46s    | ~0.79s    |
+
+#### 2.1.2. forward + backward
+
+| enable jit | jit level | capture mode | backend | fullgraph | *time to compile | *time to run thousand times | *time end to end(a thousand times) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| false | -     | -          | -             | -     | ~6.06s | ~1.47s    | ~7.53s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.33s | ~0.46s    | ~0.79s    |
 
 
-### 2.2 LLMs block
+#### ⚠️ Note:
+
+0. the above results vary greatly for different devices and device states, data only for reference.
+1. *time to compile, potential jitted object reuse may lead to inaccurate comparison.
+2. *time to run thousand times, potential asynchronous execution operations may lead to inaccurate testing times.
+3. *time end to end, due to the first and second points, the time may not be accurate.
+
+
+### 2.2. LLMs block
 
 Taking `llama` used in `llama` as an example:
