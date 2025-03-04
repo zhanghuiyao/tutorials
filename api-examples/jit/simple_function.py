@@ -60,7 +60,7 @@ jitted_by_ast_and_ge_fullgraph_f = jit(f, capture_mode="ast", backend="GE", full
 function_dict = {
     "function": f,
     
-    # "function jitted by ast and levelO0": jitted_defult_f,
+    "function jitted by ast and levelO0": jitted_defult_f,
     "function jitted by ast and levelO1": jitted_by_ast_and_levelO1_f,
     "function jitted by ast and ge": jitted_by_ast_and_ge_f,
     
