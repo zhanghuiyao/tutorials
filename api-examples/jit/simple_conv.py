@@ -1,6 +1,7 @@
 import time
 import numpy as np
 from typing import Optional, Union, Callable
+from functools import partial
 
 import mindspore
 from mindspore import ops, nn, Tensor
@@ -82,11 +83,11 @@ grad_fn = mindspore.value_and_grad(block, None, block.trainable_params(), has_au
 
 run_func(block, des="origin block fp")
 
-run_func(fp_and_bp, des="origin block fp+bp")
+run_func(partial(fp_and_bp, grad_fn), des="origin block fp+bp")
 
 block.construct = mindspore.jit(block.construct)
 
 run_func(block, des="jitted block by default fp")
 
-run_func(fp_and_bp, des="jitted block by default fp+bp")
+run_func(partial(fp_and_bp, grad_fn), des="jitted block by default fp+bp")
 
