@@ -14,41 +14,40 @@ def f(a, b, c):
 
 jitted_defult_f = jit(f)
 # jitted_by_ast_and_levelO0_f = jit(f, capture_mode="ast", jit_level="O0")
-
 jitted_by_ast_and_levelO1_f = jit(f, capture_mode="ast", jit_level="O1")
-
 jitted_by_ast_and_ge_f = jit(f, capture_mode="ast", backend="GE")
 
 
 jitted_by_bytecode_and_levelO0_f = jit(f, capture_mode="bytecode", jit_level="O0")
-
 jitted_by_bytecode_and_levelO1_f = jit(f, capture_mode="bytecode", jit_level="O1")
-
 jitted_by_bytecode_and_ge_f = jit(f, capture_mode="bytecode", backend="GE")
 
+
+######################################################################################################
+# !!! jit by trace must be use the registry method !!!
 
 # jitted_by_trace_and_levelO0_f = jit(f, capture_mode="trace", jit_level="O0")
 # jitted_by_trace_and_levelO1_f = jit(f, capture_mode="trace", jit_level="O1")
 # jitted_by_trace_and_ge_f = jit(f, capture_mode="trace", backend="GE")
 
 @jit(capture_mode="trace", jit_level="O0")
-def jitted_by_trace_and_levelO0_f(a, b, c):
-    return a * b + c
+def jitted_by_trace_and_levelO0_f(*input):
+    return f(*input)
 
 @jit(capture_mode="trace", jit_level="O1")
-def jitted_by_trace_and_levelO1_f(a, b, c):
-    return a * b + c
+def jitted_by_trace_and_levelO1_f(*input):
+    return f(*input)
 
 @jit(capture_mode="trace", backend="GE")
-def jitted_by_trace_and_ge_f(a, b, c):
-    return a * b + c
+def jitted_by_trace_and_ge_f(*input):
+    return f(*input)
+######################################################################################################
 
 
 jitted_by_ast_and_levelO0_fullgraph_f = jit(f, capture_mode="ast", jit_level="O0", fullgraph=True)
-
 jitted_by_ast_and_levelO1_fullgraph_f = jit(f, capture_mode="ast", jit_level="O1", fullgraph=True)
-
 jitted_by_ast_and_ge_fullgraph_f = jit(f, capture_mode="ast", backend="GE", fullgraph=True)
+
 
 
 function_dict = {
@@ -77,15 +76,13 @@ function_dict = {
 for s, f in function_dict.items():
     s_time = time.time()
     
-    # out = f(*f_input)
-    out = f(f_input[0], f_input[1], f_input[2])
+    out = f(*f_input)
     
     time_to_compile = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
-        # out = f(*f_input)
-        out = f(f_input[0], f_input[1], f_input[2])
+        out = f(*f_input)
     
     time_to_run_thousand_times = time.time() - s_time
 
