@@ -6,7 +6,7 @@ import mindspore
 from mindspore import ops, nn, Tensor
 
 
-x = Tensor(np.random.randn(1, 3, 256, 256), mindspore.float32)
+x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
 
 
 class BasicBlock(nn.Cell):
