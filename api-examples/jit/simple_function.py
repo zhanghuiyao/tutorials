@@ -61,7 +61,7 @@ jitted_by_ast_and_ge_fullgraph_f = mindspore.jit(f, capture_mode="ast", backend=
 
 
 function_dict = {
-    "function": f,
+    "function ": f,
     
     "function jitted by ast and levelO0": jitted_defult_f,
     "function jitted by ast and levelO1": jitted_by_ast_and_levelO1_f,
@@ -98,5 +98,5 @@ for s, f in function_dict.items():
     
     time_to_run_thousand_times = time.time() - s_time
 
-    print(f"{s}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
+    print(f"{s}, out shape: {out.shape}, time to compile: {time_to_compile:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s, time end to end(a thousand times): {time_to_compile+time_to_run_thousand_times:.2f}")
 
