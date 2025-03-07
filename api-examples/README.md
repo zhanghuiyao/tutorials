@@ -4,5 +4,5 @@
 | ops | [operator](./operator)  |
 | nn | [nerual network](./nn)  |
 | tensor | [tensor](./tensor)  |
+| jit | [just-in-time (jit)](./jit/jit-compilation.md)  |
 | runtime | [runtime](./runtime)  |
-
