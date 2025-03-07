@@ -1,5 +1,5 @@
 
-# JIT
+# JIT, Just-In-Time
 
 ## 1. test simple function examples
 
@@ -17,8 +17,8 @@ we define `funtion(a,b,c)=a*b+c`, and warp it by `mindspore.jit`, run by `GLOG_v
 | true  | O1    | bytecode   | ms_backend    | false | ~0.00s | ~0.74s   |
 | true  | -     | bytecode   | ge            | false | ~0.00s | ~0.74s   |
 ||
-| true  | O0    | trace      | ms_backend    | false | ~0.17s | **~3.34s**   |
-| true  | O1    | trace      | ms_backend    | false | ~0.15s | ~2.38s   |
+| true  | O0    | trace      | ms_backend    | false | ~0.17s | ~3.34s   |
+| true  | O1    | trace      | ms_backend    | false | ~0.15s | **~2.38s**   |
 | true  | -     | trace      | ge            | false | ~0.17s | ~3.49s   |
 ||
 | true  | O0    | ast        | ms_backend    | true  | ~0.02s | **~0.56s**   |
@@ -42,7 +42,7 @@ we define `funtion(a,b,c)=a*b+c`, and warp it by `mindspore.jit`, run by `GLOG_v
 
 ## 2. test simple module examples
 
-### 2.1. simple `conv` blocks
+### 2.1. simple `conv` module
 
 we define `BasicBlock` which is use in `resnet`, and warp it by `mindspore.jit`, run by `GLOG_v=3 python -u simple_conv.py`, result is follow:
 
@@ -65,4 +65,10 @@ we define `BasicBlock` which is use in `resnet`, and warp it by `mindspore.jit`,
 0. the above results vary greatly for different devices and device states, data only for reference.
 1. *time to prepare, potential jitted object reuse and device memory copy may lead to inaccurate comparison.
 2. *time to run thousand times, potential asynchronous execution operations may lead to inaccurate testing times.
+
+
+### 2.2. simple `attention` module
+
+we define `LlamaBlock` which is use in `llama`, and warp it by `mindspore.jit`, run by `GLOG_v=3 python -u simple_xx.py`, result is follow:
+
 
