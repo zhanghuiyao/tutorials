@@ -15,6 +15,8 @@ init()
 
 
 class Mlp(nn.Cell):
+    
+    @mindspore.lazy_inline
     def __init__(self, num_layers: int = 8, in_channel: int = 512, out_channel: int = 512):
         super().__init__()
         
