@@ -73,10 +73,9 @@ def train_step(inputs, target):
     optimizer(grads)
     return loss, grads
 
+x, y = Tensor(np.random.randn(4, 512, 512), mindspore.float32), Tensor(np.ones((4, 512, 512)), mindspore.float32)
 
 for i in range(10):
-
-    x, y = Tensor(np.random.randn(4, 512, 512), mindspore.float32), Tensor(np.ones((4, 512, 512)), mindspore.float32)
 
     s_time = time.time()
     
