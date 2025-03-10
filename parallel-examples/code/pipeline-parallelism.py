@@ -17,12 +17,25 @@ class Mlp(nn.Cell):
     def __init__(self, num_layers: int = 8, in_channel: int = 512, out_channel: int = 512, num_labels: int = 1):
         super().__init__()
         
-        layers = [nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)]
-        for _ in range(num_layers-1):
-            layers.append(
-                nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
-            )
-        self.layers = nn.CellList(layers)
+        # 1. & 2.
+        # layers = [nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)]
+        # for _ in range(num_layers-1):
+        #     layers.append(
+        #         nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        #     )
+        # self.layers = nn.CellList(layers)
+
+        # 3.
+        self.layer0 = nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)
+        self.layer1 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        self.layer2 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        self.layer3 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        self.layer4 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        self.layer5 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        self.layer6 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+        self.layer7 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
+
+
 
         self.loss_fn = nn.MSELoss()
 
@@ -33,16 +46,30 @@ class Mlp(nn.Cell):
         labels  : (bs, seq, channel)
         """
 
+        # 1.
         # for layer in self.layers:
         #     x = layer(x)
-        x = self.layers[0](x)
-        x = self.layers[1](x)
-        x = self.layers[2](x)
-        x = self.layers[3](x)
-        x = self.layers[4](x)
-        x = self.layers[5](x)
-        x = self.layers[6](x)
-        x = self.layers[7](x)
+        
+        # 2.
+        # x = self.layers[0](x)
+        # x = self.layers[1](x)
+        # x = self.layers[2](x)
+        # x = self.layers[3](x)
+        # x = self.layers[4](x)
+        # x = self.layers[5](x)
+        # x = self.layers[6](x)
+        # x = self.layers[7](x)
+
+        # 3.
+        x = self.layers0(x)
+        x = self.layers1(x)
+        x = self.layers2(x)
+        x = self.layers3(x)
+        x = self.layers4(x)
+        x = self.layers5(x)
+        x = self.layers6(x)
+        x = self.layers7(x)
+
 
         loss = self.loss_fn(x, labels)
 
@@ -54,11 +81,17 @@ optimizer = nn.AdamWeightDecay(net.trainable_params())
 
 
 # pipeline-parallelism setting
+# stage_config = {
+#     "layers.0": 0, "layers.1": 0,   # stage 0
+#     "layers.2": 1, "layers.3": 1,   # stage 1
+#     "layers.4": 2, "layers.5": 2,   # stage 2
+#     "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
+# }
 stage_config = {
-    "layers.0": 0, "layers.1": 0,   # stage 0
-    "layers.2": 1, "layers.3": 1,   # stage 1
-    "layers.4": 2, "layers.5": 2,   # stage 2
-    "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
+    "layers0": 0, "layers1": 0,   # stage 0
+    "layers2": 1, "layers3": 1,   # stage 1
+    "layers4": 2, "layers5": 2,   # stage 2
+    "layers6": 3, "layers7": 3, "loss_fn": 3  # stage 3
 }
 pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
 pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
