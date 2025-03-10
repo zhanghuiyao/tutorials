@@ -8,15 +8,14 @@ from mindspore.communication.management import init
 from mindspore.nn.utils import no_init_parameters
     
 
-context.set_context(mode=context.PYNATIVE_MODE, pynative_synchronize=True)
-
-# context.set_context(mode=context.GRAPH_MODE)
-# mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
-# init()
+context.set_context(mode=context.GRAPH_MODE, pynative_synchronize=True)
+mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
+mindspore.set_auto_parallel_context(pipeline_config={'pipeline_scheduler':'1f1b', 'pipeline_interleave':True})
+init()
 
 
 class Mlp(nn.Cell):
-    def __init__(self, num_layers: int = 8, in_channel: int = 512, out_channel: int = 512, num_labels: int = 1):
+    def __init__(self, num_layers: int = 8, in_channel: int = 512, out_channel: int = 512):
         super().__init__()
         
         # 1. & 2.
@@ -97,47 +96,42 @@ optimizer = nn.AdamWeightDecay(net.trainable_params())
 #     "layers6": 3, "layers7": 3, "loss_fn": 3  # stage 3
 # }
 # 4.
-# stage_config = None
-# net.layer0.pipeline_stage = 0
-# net.layer1.pipeline_stage = 0
-# net.layer2.pipeline_stage = 1
-# net.layer3.pipeline_stage = 1
-# net.layer4.pipeline_stage = 2
-# net.layer5.pipeline_stage = 2
-# net.layer6.pipeline_stage = 3
-# net.layer7.pipeline_stage = 3
+stage_config = None
+net.layer0.pipeline_stage = 0
+net.layer1.pipeline_stage = 0
+net.layer2.pipeline_stage = 1
+net.layer3.pipeline_stage = 1
+net.layer4.pipeline_stage = 2
+net.layer5.pipeline_stage = 2
+net.layer6.pipeline_stage = 3
+net.layer7.pipeline_stage = 3
 
 
-# pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
+pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
 # pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
 # pp_net.full_batch = True
 # pp_net.pipeline(stages=4, scheduler="1f1b")
+pp_net.set_train()
 
 
-# grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
-# pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
+grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
+pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
 
 
-# @mindspore.jit
-# def train_step(inputs, target):
-#     loss, grads = grad_fn(inputs, target)
-#     grads = pp_grad_reducer(grads)
-#     optimizer(grads)
-#     return loss, grads
+@mindspore.jit
+def train_step(inputs, target):
+    loss, grads = grad_fn(inputs, target)
+    grads = pp_grad_reducer(grads)
+    optimizer(grads)
+    return loss, grads
 
 
-# for i in range(10):
+for i in range(10):
 
-#     x, y = Tensor(np.random.randn(4, 512, 512), mindspore.float32), Tensor(np.ones((4, 512, 512)), mindspore.float32)
+    x, y = Tensor(np.random.randn(4, 512, 512), mindspore.float32), Tensor(np.ones((4, 512, 512)), mindspore.float32)
 
-#     s_time = time.time()
+    s_time = time.time()
     
-#     loss, grads = train_step(x, y)
+    loss, grads = train_step(x, y)
     
-#     print(f"step: {i}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
-
-
-
-x, y = Tensor(np.random.randn(4, 512, 512), mindspore.float32), Tensor(np.ones((4, 512, 512)), mindspore.float32)
-loss = net(x, y)
-print(f"{loss=}")
+    print(f"step: {i}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
