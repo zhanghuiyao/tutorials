@@ -9,7 +9,9 @@ from mindspore.nn.utils import no_init_parameters
     
 
 context.set_context(mode=context.GRAPH_MODE)
+mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
 init()
+
 
 class Mlp(nn.Cell):
     def __init__(self, num_layers: int = 8, in_channel: int = 512, out_channel: int = 512, num_labels: int = 1):
