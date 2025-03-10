@@ -45,7 +45,7 @@ class Mlp(nn.Cell):
 
 
 net = Mlp(num_layers=8)
-optimizer = nn.AdamWeightDecay(net.trainable_params())
+optimizer = nn.SGD(net.trainable_params(), learning_rate=1e-2)
 
 
 # pipeline-parallelism setting
