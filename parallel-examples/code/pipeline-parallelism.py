@@ -59,14 +59,14 @@ class Mlp(nn.Cell):
         # x = self.layers[7](x)
 
         # 3. & 4.
-        x = self.layers0(x)
-        x = self.layers1(x)
-        x = self.layers2(x)
-        x = self.layers3(x)
-        x = self.layers4(x)
-        x = self.layers5(x)
-        x = self.layers6(x)
-        x = self.layers7(x)
+        x = self.layer0(x)
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+        x = self.layer5(x)
+        x = self.layer6(x)
+        x = self.layer7(x)
 
 
         loss = self.loss_fn(x, labels)
