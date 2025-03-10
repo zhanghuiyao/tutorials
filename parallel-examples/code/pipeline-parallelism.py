@@ -27,7 +27,7 @@ class Mlp(nn.Cell):
             )
         self.layers = nn.CellList(layers)
 
-        self.loss_fn = nn.CrossEntropyLoss()
+        self.loss_fn = nn.MSELoss()
 
     def construct(self, x: Tensor, labels: Tensor = None):
         
