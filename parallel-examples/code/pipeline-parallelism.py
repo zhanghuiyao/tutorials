@@ -3,6 +3,7 @@ import numpy as np
 
 import mindspore
 from mindspore import context, nn, ops, Tensor, Parameter
+from mindspore.parallel.auto_parallel import AutoParallel
 from mindspore.communication.management import init
 from mindspore.nn.utils import no_init_parameters
     
@@ -50,7 +51,7 @@ stage_config = {
     "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
 }
 pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
-pp_net = mindspore.parallel.auto_parallel.AutoParallel(pp_net, parallel_mode="semi_auto")
+pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
 pp_net.full_batch = True
 pp_net.pipeline(stages=4, scheduler="1f1b")
 
