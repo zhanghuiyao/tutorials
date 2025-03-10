@@ -33,8 +33,16 @@ class Mlp(nn.Cell):
         labels  : (bs, seq, channel)
         """
 
-        for layer in self.layers:
-            x = layer(x)
+        # for layer in self.layers:
+        #     x = layer(x)
+        x = self.layers[0](x)
+        x = self.layers[1](x)
+        x = self.layers[2](x)
+        x = self.layers[3](x)
+        x = self.layers[4](x)
+        x = self.layers[5](x)
+        x = self.layers[6](x)
+        x = self.layers[7](x)
 
         loss = self.loss_fn(x, labels)
 
