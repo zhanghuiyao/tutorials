@@ -25,7 +25,7 @@ class Mlp(nn.Cell):
         #     )
         # self.layers = nn.CellList(layers)
 
-        # 3.
+        # 3. & 4.
         self.layer0 = nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)
         self.layer1 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
         self.layer2 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
@@ -34,8 +34,6 @@ class Mlp(nn.Cell):
         self.layer5 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
         self.layer6 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
         self.layer7 = nn.Dense(out_channel, out_channel, activation="relu", has_bias=False)
-
-
 
         self.loss_fn = nn.MSELoss()
 
@@ -60,7 +58,7 @@ class Mlp(nn.Cell):
         # x = self.layers[6](x)
         # x = self.layers[7](x)
 
-        # 3.
+        # 3. & 4.
         x = self.layers0(x)
         x = self.layers1(x)
         x = self.layers2(x)
@@ -81,18 +79,33 @@ optimizer = nn.AdamWeightDecay(net.trainable_params())
 
 
 # pipeline-parallelism setting
+
+# 1. & 2.
 # stage_config = {
 #     "layers.0": 0, "layers.1": 0,   # stage 0
 #     "layers.2": 1, "layers.3": 1,   # stage 1
 #     "layers.4": 2, "layers.5": 2,   # stage 2
 #     "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
 # }
-stage_config = {
-    "layers0": 0, "layers1": 0,   # stage 0
-    "layers2": 1, "layers3": 1,   # stage 1
-    "layers4": 2, "layers5": 2,   # stage 2
-    "layers6": 3, "layers7": 3, "loss_fn": 3  # stage 3
-}
+# 3.
+# stage_config = {
+#     "layers0": 0, "layers1": 0,   # stage 0
+#     "layers2": 1, "layers3": 1,   # stage 1
+#     "layers4": 2, "layers5": 2,   # stage 2
+#     "layers6": 3, "layers7": 3, "loss_fn": 3  # stage 3
+# }
+# 4.
+stage_config = None
+net.layer0.pipeline_stage = 0
+net.layer1.pipeline_stage = 0
+net.layer2.pipeline_stage = 1
+net.layer3.pipeline_stage = 1
+net.layer4.pipeline_stage = 2
+net.layer5.pipeline_stage = 2
+net.layer6.pipeline_stage = 3
+net.layer7.pipeline_stage = 3
+
+
 pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
 pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
 pp_net.full_batch = True
