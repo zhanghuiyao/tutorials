@@ -48,18 +48,31 @@ net = Mlp(num_layers=8)
 optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 
 
+# 1.
 # pipeline-parallelism setting
-stage_config = {
-    "layers.0": 0, "layers.1": 0,   # stage 0
-    "layers.2": 1, "layers.3": 1,   # stage 1
-    "layers.4": 2, "layers.5": 2,   # stage 2
-    "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
-}
-pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
+# stage_config = {
+#     "layers.0": 0, "layers.1": 0,   # stage 0
+#     "layers.2": 1, "layers.3": 1,   # stage 1
+#     "layers.4": 2, "layers.5": 2,   # stage 2
+#     "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
+# }
+# pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
 # pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
 # pp_net.full_batch = True
 # pp_net.pipeline(stages=4, scheduler="1f1b", interleave=True)
-pp_net.set_train()
+# pp_net.set_train()
+#
+# 2.
+net.layers[0].pipeline_stage = 0
+net.layers[1].pipeline_stage = 0
+net.layers[2].pipeline_stage = 1
+net.layers[3].pipeline_stage = 1
+net.layers[4].pipeline_stage = 2
+net.layers[5].pipeline_stage = 2
+net.layers[6].pipeline_stage = 3
+net.layers[7].pipeline_stage = 4
+pp_net = nn.PipelineCell(net, micro_size=4)
+
 
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
 pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
