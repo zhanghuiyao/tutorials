@@ -11,7 +11,7 @@ from mindspore.nn.utils import no_init_parameters
 context.set_context(mode=context.GRAPH_MODE, pynative_synchronize=True)
 # mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
 # mindspore.set_auto_parallel_context(pipeline_config={'pipeline_scheduler':'1f1b', 'pipeline_interleave':True})
-init()
+# init()
 
 
 class Mlp(nn.Cell):
