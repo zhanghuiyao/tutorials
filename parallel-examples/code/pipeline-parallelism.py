@@ -65,7 +65,8 @@ pp_net = net
 pp_net.set_train()
 
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
-pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
+# pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
+pp_grad_reducer = nn.Identity()
 
 
 @mindspore.jit
