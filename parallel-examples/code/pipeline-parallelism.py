@@ -58,7 +58,7 @@ stage_config = {
 pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
 pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
 pp_net.full_batch = True
-pp_net.pipeline(stages=4, scheduler="1f1b")
+pp_net.pipeline(stages=4, scheduler="1f1b", interleave=True)
 pp_net.set_train()
 
 
