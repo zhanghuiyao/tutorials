@@ -70,7 +70,7 @@ def train_step(inputs, target):
 
 for i in range(10):
 
-    x, y = Tensor(np.random.randn(1, 512, 512), mindspore.float32), Tensor(np.ones((1, 512, 512)), mindspore.float32)
+    x, y = Tensor(np.random.randn(4, 512, 512), mindspore.float32), Tensor(np.ones((4, 512, 512)), mindspore.float32)
 
     s_time = time.time()
     
