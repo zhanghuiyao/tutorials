@@ -70,7 +70,7 @@ net.layers[3].pipeline_stage = 1
 net.layers[4].pipeline_stage = 2
 net.layers[5].pipeline_stage = 2
 net.layers[6].pipeline_stage = 3
-net.layers[7].pipeline_stage = 4
+net.layers[7].pipeline_stage = 3
 pp_net = nn.PipelineCell(net, micro_size=4)
 
 
