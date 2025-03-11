@@ -80,4 +80,4 @@ for i in range(100):
         print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
         s_time = time.time()
 
-print(f"{net.layers[get_rank()]=}, {optimizer.moments1[get_rank()].shape=}, {optimizer.moments2[get_rank()].shape=}, {grads[0].shape=}")
+print(f"{net.layers[get_rank()].weight.shape=}, {optimizer.moments1[get_rank()].shape=}, {optimizer.moments2[get_rank()].shape=}, {grads[0].shape=}")
