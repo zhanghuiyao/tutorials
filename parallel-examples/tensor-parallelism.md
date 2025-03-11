@@ -69,7 +69,7 @@ net.relu2.shard(((4, 1),))
 
 ```python
 # 初始化优化器和梯度函数
-optimizer = nn.AdamWeightDecay(net.trainable_params(), learning_rate=0.01)
+optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 grad_fn = ops.value_and_grad(net, None, optimizer.parameters)
 grad_reducer = nn.Identity()
 
@@ -91,8 +91,8 @@ for i in range(100):
         print(f"step: {i+1}, loss: {loss}")
 
 # 打印当前卡模型的权重、优化器状态和梯度张量的大小
-print(f"{net.weight1.shape=}, {optimizer.moments1[0].shape=}, {optimizer.moments2[0].shape=}, {grads[0].shape=}")   # matmul1 weight shard to (2, 1)
-print(f"{net.weight2.shape=}, {optimizer.moments1[1].shape=}, {optimizer.moments2[1].shape=}, {grads[1].shape=}")   # matmul2 weight shard to (4, 1)
+print(f"{net.weight1.shape=}, {grads[0].shape=}")   # matmul1 weight shard to (2, 1)
+print(f"{net.weight2.shape=}, {grads[1].shape=}")   # matmul2 weight shard to (4, 1)
 ```
 
 
