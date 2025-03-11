@@ -69,3 +69,9 @@ for i in range(100):
     
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
+
+
+print(f"{net.layers[0].weight.shape=}, {grads[0].shape=}")
+print(f"{net.layers[1].weight.shape=}, {grads[1].shape=}")
+print(f"{net.layers[2].weight.shape=}, {grads[2].shape=}")
+print(f"{net.layers[3].weight.shape=}, {grads[3].shape=}")
