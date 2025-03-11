@@ -53,6 +53,7 @@ pp_net = nn.PipelineCell(net, micro_size=4)
 for i in range(4):
     net.layers[i] = None if i == get_rank() else net.layers[i]
 
+
 pp_net.set_train()
 optimizer = nn.AdamWeightDecay(net.trainable_params(), learning_rate=0.001)
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
@@ -79,9 +80,4 @@ for i in range(100):
         print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
         s_time = time.time()
 
-
-print(f"{len(net.layers)=}, {len(optimizer.moments1)=}, {len(optimizer.moments2)=}, {len(grads)=}")
-print(f"{net.layers[0]=}, {optimizer.moments1[0].shape=}, {optimizer.moments2[0].shape=}, {grads[0].shape=}")
-print(f"{net.layers[1]=}, {optimizer.moments1[1].shape=}, {optimizer.moments2[1].shape=}")
-print(f"{net.layers[2]=}, {optimizer.moments1[2].shape=}, {optimizer.moments2[2].shape=}")
-print(f"{net.layers[3]=}, {optimizer.moments1[3].shape=}, {optimizer.moments2[3].shape=}")
+print(f"{net.layers[get_rank()]=}, {optimizer.moments1[get_rank()].shape=}, {optimizer.moments2[get_rank()].shape=}, {grads[0].shape=}")
