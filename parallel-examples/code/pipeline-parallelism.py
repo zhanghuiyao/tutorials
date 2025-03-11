@@ -77,13 +77,13 @@ def train_step(inputs, target):
     optimizer(grads)
     return loss, grads
 
-# np.random.randn(4, 512)
-x, y = Tensor(np.ones((4, 512)), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
+x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
 
-for i in range(10):
+for i in range(100):
 
     s_time = time.time()
     
     loss, grads = train_step(x, y)
     
-    print(f"step: {i}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
+    if (i+1) % 10 == 0:
+        print(f"step: {i}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
