@@ -12,11 +12,13 @@
 
 | 类别 | 子类 | 链接 |  
 |:-- |:-- |:-- |
-||||
 | (semi-)auto-parallel  | tp    | [tensor parallelism](./tensor-parallelism.md)  |
 |                       | pp    | [pipeline parallelism](./pipeline-parallelism.md)  |
-|                       | hsdp  | [optimizer parallelism](./optimizer-parallelism.md)  |
-||||
-| custom-parallel       | tp    | [custom tensor parallelism]()  |
-|                       | pp    | [custom pipeline parallelism]()  |
-|                       | ZeRO  | [mindone custom zero]()  |
+|                       | op    | [optimizer parallelism](./optimizer-parallelism.md)  |
+
+
+### 后续可能会更新 (todo-list)
+
+- [ ] custom-parallel, tp
+- [ ] custom-parallel, pp
+- [ ] custom-parallel, ZeRO

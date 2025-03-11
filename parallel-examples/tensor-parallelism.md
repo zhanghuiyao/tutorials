@@ -5,7 +5,8 @@
 
 ## 0. 张量并行介绍 (introduction)
 
-...
+张量并行技术是分布式大模型训练的核心方法之一，通过对单个张量运算（如矩阵乘法）进行拆分，实现计算与存储的细粒度并行。其核心思想是将大型权重矩阵按行或列分割至不同设备，各设备独立处理局部计算后，通过集合通信（如All-Reduce）同步结果。例如，在Transformer模型中，多头注意力层的参数矩阵可水平拆分到多个NPU/GPU，每个GPU计算部分注意力头，最终拼接输出。该技术显著降低单设备内存压力，支持大模型训练。
+
 
 ## 1. 环境配置 (init and setting)
 
@@ -102,16 +103,22 @@ print(f"{net.weight2.shape=}, {optimizer.moments1[1].shape=}, {optimizer.moments
 ASCEND_RT_VISIBLE_DEVICES=0,1,2,3 msrun --bind_core=True --worker_num=4 --local_worker_num=4 --master_port 9001 --log_dir=outputs/parallel_logs \
 python -u code/pipeline-parallelism.py
 
-# 查看日志 (pipeline并行一般查看最后一个节点的日志)
-tail -f outputs/parallel_logs/worker_3.log
+# 查看日志
+tail -f outputs/parallel_logs/worker_0.log
 ```
 
 输出打印：
 ```
-step: 10, loss: 3.8794, time cost: 7.13 ms
-step: 20, loss: 3.8757, time cost: 7.21 ms
-step: 30, loss: 3.8719, time cost: 6.92 ms
+step: 10, loss: 0.9715, time cost: 5.63 ms
+step: 20, loss: 0.9698, time cost: 5.51 ms
+step: 30, loss: 0.9681, time cost: 5.58 ms
 ...
 
-net.layers[get_rank()].weight.shape=(512, 512), grads[0].shape=(512, 512)
+net.weight1.shape=(256, 512), grads[0].shape=(256, 512)
+net.weight2.shape=(128, 512), grads[1].shape=(128, 512)
 ```
+
+
+## 5. 了解更多
+
+可以在[MindSpore网站](https://www.mindspore.cn/docs/zh-CN/master/model_train/parallel/operator_parallel.html)搜索“张量并行”。
