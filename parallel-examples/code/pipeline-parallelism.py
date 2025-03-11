@@ -3,7 +3,6 @@ import numpy as np
 
 import mindspore
 from mindspore import context, nn, ops, Tensor
-from mindspore.parallel.auto_parallel import AutoParallel
 from mindspore.communication.management import init
     
 
