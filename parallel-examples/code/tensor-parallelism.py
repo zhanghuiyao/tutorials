@@ -70,3 +70,7 @@ for i in range(100):
     
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
+
+
+print(f"{net.weight1.shape=}")
+print(f"{grads[0].shape=}")
