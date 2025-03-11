@@ -5,7 +5,7 @@
 
 ## 0. 优化器并行介绍 (introduction)
 
-...
+在进行并行训练时，模型的参数更新部分在各卡间存在冗余计算。通过优化器并行，将优化器的计算量分散到数据并行维度的卡上，实现在大规模网络上（如Transformer）有效减少内存消耗并提升网络性能。
 
 ## 核心代码实现
 
@@ -77,6 +77,12 @@ for i in range(100):
     loss, grads = train_step(x, y)
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
+
+# 打印当前卡上每一层的权重、优化器状态和梯度张量的大小
+print(f"{net.layers[0].weight.shape=}, {optimizer.moments1[0].shape=}, {optimizer.moments2[0].shape=}, {grads[0].shape=}")
+print(f"{net.layers[1].weight.shape=}, {optimizer.moments1[1].shape=}, {optimizer.moments2[1].shape=}, {grads[1].shape=}")
+print(f"{net.layers[2].weight.shape=}, {optimizer.moments1[2].shape=}, {optimizer.moments2[2].shape=}, {grads[2].shape=}")
+print(f"{net.layers[3].weight.shape=}, {optimizer.moments1[3].shape=}, {optimizer.moments2[3].shape=}, {grads[3].shape=}")
 ```
 
 
@@ -102,24 +108,6 @@ net.layers[0].weight.shape=(128, 512), optimizer.moments1[0].shape=(128, 512), o
 ...
 ```
 
+## 5. 了解更多
 
-
-## 效果验证
-### 参数分布验证
-```text
-net.layers[0].weight.shape=(512,128)  # 原始参数被切分为4份
-optimizer.moments1[0].shape=(512,128) # 优化器状态对应切分
-grads[0].shape=(512,128)              # 梯度保持相同切分
-```
-
-### 性能指标
-```text
-step: 10, loss: 0.87, per step time: 45.32 ms
-step: 20, loss: 0.42, per step time: 43.91 ms
-step: 100, loss: 0.02, per step time: 41.23 ms
-```
-
-## 常见问题
-1. **通信融合策略**：不同层设置不同fusion group实现流水线通信
-2. **内存优化**：相比数据并行内存占用减少75%
-3. **扩展性**：支持千亿参数规模训练
+可以在[MindSpore网站](https://www.mindspore.cn/docs/zh-CN/master/model_train/parallel/optimizer_parallel.html)搜索“优化器并行”。

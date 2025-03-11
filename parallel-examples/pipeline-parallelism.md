@@ -106,6 +106,9 @@ for i in range(100):
     loss, grads = train_step(x, y)
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}")
+
+# 打印当前卡所在stage的权重大小和梯度张量大小
+print(f"{net.layers[get_rank()].weight.shape=}, {grads[0].shape=}")
 ```
 
 
@@ -122,9 +125,9 @@ tail -f outputs/parallel_logs/worker_3.log
 
 输出打印：
 ```
-step: 10, loss: 3.8794, time cost: 11007.34 ms
-step: 20, loss: 3.8757, time cost: 68.16 ms
-step: 30, loss: 3.8719, time cost: 65.93 ms
+step: 10, loss: 3.8794, time cost: 7.13 ms
+step: 20, loss: 3.8757, time cost: 7.21 ms
+step: 30, loss: 3.8719, time cost: 6.92 ms
 ...
 
 net.layers[get_rank()].weight.shape=(512, 512), grads[0].shape=(512, 512)

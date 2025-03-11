@@ -60,7 +60,7 @@ def train_step(inputs, target):
     return loss, grads
 
 
-x, y = Tensor(np.random.randn(1, 512), mindspore.float32), Tensor(np.ones((1, 512)), mindspore.float32)
+x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
 
 for i in range(100):
     
@@ -69,7 +69,7 @@ for i in range(100):
     loss, grads = train_step(x, y)
     
     if (i+1) % 10 == 0:
-        print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
+        print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
 
 
 print(f"{net.weight1.shape=}, {optimizer.moments1[0].shape=}, {optimizer.moments2[0].shape=}, {grads[0].shape=}")   # matmul1 weight shard to (2, 1)
