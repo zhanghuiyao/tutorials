@@ -85,20 +85,21 @@ for i in range(100):
 ```shell
 # 运行示例代码，使用前4张卡
 ASCEND_RT_VISIBLE_DEVICES=0,1,2,3 msrun --bind_core=True --worker_num=4 --local_worker_num=4 --master_port 9001 --log_dir=outputs/parallel_logs \
-python -u code/pipeline-parallelism.py
+python -u code/optimizer-parallelism.py
 
-# 查看日志 (pipeline并行一般查看最后一个节点的日志)
-tail -f outputs/parallel_logs/worker_3.log
+# 查看日志
+tail -f outputs/parallel_logs/worker_0.log
 ```
 
 输出打印：
 ```
-step: 10, loss: 3.8794, time cost: 11007.34 ms
-step: 20, loss: 3.8757, time cost: 68.16 ms
-step: 30, loss: 3.8719, time cost: 65.93 ms
+step: 10, loss: 0.9205, time cost: 5.12 ms
+step: 20, loss: 0.9571, time cost: 4.99 ms
+step: 30, loss: 0.9074, time cost: 4.93 ms
 ...
 
-net.layers[get_rank()].weight.shape=(512, 512), grads[0].shape=(512, 512)
+net.layers[0].weight.shape=(128, 512), optimizer.moments1[0].shape=(128, 512), optimizer.moments2[0].shape=(128, 512), grads[0].shape=(128, 512)
+...
 ```
 
 

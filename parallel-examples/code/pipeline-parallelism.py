@@ -66,14 +66,14 @@ def train_step(inputs, target):
 # batch-size must be divisible by micro-batch-size
 x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
 
-s_time = time.time()
 for i in range(100):
     
+    s_time = time.time()
+
     loss, grads = train_step(x, y)
     
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
-        s_time = time.time()
 
 
 print(f"{net.layers[get_rank()].weight.shape=}, {grads[0].shape=}")
