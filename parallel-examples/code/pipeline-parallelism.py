@@ -49,6 +49,10 @@ net.loss_fn.pipeline_stage = 3
 pp_net = nn.PipelineCell(net, micro_size=4)
 
 
+# (option) manually delete useless layers
+for i in range(4):
+    net.layers[i] = None if i == get_rank() else net.layers[i]
+
 pp_net.set_train()
 optimizer = nn.AdamWeightDecay(net.trainable_params(), learning_rate=0.001)
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
