@@ -2,16 +2,15 @@ import time
 import numpy as np
 
 import mindspore
-from mindspore import context, nn, ops, Tensor, Parameter
+from mindspore import context, nn, ops, Tensor
 from mindspore.parallel.auto_parallel import AutoParallel
 from mindspore.communication.management import init
-from mindspore.nn.utils import no_init_parameters
     
 
 context.set_context(mode=context.GRAPH_MODE)
 # mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
 # mindspore.set_auto_parallel_context(pipeline_config={'pipeline_scheduler':'1f1b', 'pipeline_interleave':True})
-# init()
+init()
 
 
 class Mlp(nn.Cell):
@@ -48,26 +47,21 @@ net = Mlp(num_layers=4)
 optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 
 # pipeline-parallelism setting
-# stage_config = {
-#     "layers.0": 0, "layers.1": 0,   # stage 0
-#     "layers.2": 1, "layers.3": 1,   # stage 1
-#     "layers.4": 2, "layers.5": 2,   # stage 2
-#     "layers.6": 3, "layers.7": 3, "loss_fn": 3  # stage 3
-# }
-# pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
-# pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
-# pp_net.full_batch = True
-# pp_net.pipeline(stages=4, scheduler="1f1b", interleave=True)
-# pp_net.set_train()
-
-# zhy_test
-pp_net = net
+stage_config = {
+    "layers.0": 0,  # stage 0
+    "layers.1": 1,  # stage 1
+    "layers.2": 2,  # stage 2
+    "layers.3": 3, "loss_fn": 3  # stage 3
+}
+pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
+pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
+pp_net.full_batch = True
+pp_net.pipeline(stages=4, scheduler="1f1b", interleave=True)
 pp_net.set_train()
-pp_grad_reducer = nn.Identity()
 
 
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
-# pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
+pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
 
 
 @mindspore.jit
@@ -86,4 +80,4 @@ for i in range(100):
     loss, grads = train_step(x, y)
     
     if (i+1) % 10 == 0:
-        print(f"step: {i}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
+        print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
