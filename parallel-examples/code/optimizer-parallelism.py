@@ -7,14 +7,13 @@ from mindspore.communication.management import init
     
 
 context.set_context(mode=context.GRAPH_MODE)
-mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
-mindspore.set_auto_parallel_context(pipeline_config={'pipeline_scheduler':'1f1b', 'pipeline_interleave':True})
+mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, enable_parallel_optimizer=True)
 init()
 
 
 class Mlp(nn.Cell):
     
-    @mindspore.lazy_inline  # lazy_inline is must in pipeline-parallelism
+    # @mindspore.lazy_inline  # lazy_inline is not required in optimizer-parallelism
     def __init__(self, num_layers: int = 4, in_channel: int = 512, out_channel: int = 512):
         super().__init__()
         
@@ -28,6 +27,7 @@ class Mlp(nn.Cell):
         self.loss_fn = nn.MSELoss()
 
     def construct(self, x: Tensor, labels: Tensor = None):
+
         for layer in self.layers:
             x = layer(x)
 
@@ -38,26 +38,23 @@ class Mlp(nn.Cell):
 
 net = Mlp(num_layers=4)
 
-
-# pipeline-parallelism stage setting
-net.layers[0].pipeline_stage = 0
-net.layers[1].pipeline_stage = 1
-net.layers[2].pipeline_stage = 2
-net.layers[3].pipeline_stage = 3
-net.loss_fn.pipeline_stage = 3
-pp_net = nn.PipelineCell(net, micro_size=4)
-pp_net.set_train()
+# optimizer-parallelism comm fusion setting
+net.layers[0].set_comm_fusion(0)
+net.layers[1].set_comm_fusion(1)
+net.layers[2].set_comm_fusion(2)
+net.layers[3].set_comm_fusion(3)
+net.set_train()
 
 
 optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
-grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
-pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
+grad_fn = ops.value_and_grad(net, None, optimizer.parameters)
+grad_reducer = nn.Identity()
 
 
 @mindspore.jit
 def train_step(inputs, target):
     loss, grads = grad_fn(inputs, target)
-    grads = pp_grad_reducer(grads)
+    grads = grad_reducer(grads)
     optimizer(grads)
     return loss, grads
 
