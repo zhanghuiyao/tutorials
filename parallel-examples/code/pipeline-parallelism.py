@@ -50,7 +50,7 @@ pp_net = nn.PipelineCell(net, micro_size=4)
 
 
 pp_net.set_train()
-optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
+optimizer = nn.AdamWeightDecay(net.trainable_params(), learning_rate=0.01)
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
 pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
 
@@ -74,3 +74,9 @@ for i in range(100):
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
         s_time = time.time()
+
+
+print(f"{net.layers[0].weight.shape=}, {optimizer.moments1[0].shape=}, {optimizer.moments2[0].shape=}, {grads[0].shape=}")
+print(f"{net.layers[1].weight.shape=}, {optimizer.moments1[1].shape=}, {optimizer.moments2[1].shape=}, {grads[1].shape=}")
+print(f"{net.layers[2].weight.shape=}, {optimizer.moments1[2].shape=}, {optimizer.moments2[2].shape=}, {grads[2].shape=}")
+print(f"{net.layers[3].weight.shape=}, {optimizer.moments1[3].shape=}, {optimizer.moments2[3].shape=}, {grads[3].shape=}")
