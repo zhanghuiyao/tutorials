@@ -13,9 +13,9 @@
 | 类别 | 子类 | 链接 |  
 |:-- |:-- |:-- |
 ||||
-| (semi-)auto-parallel  | tp    | [tensor parallelism]()  |
+| (semi-)auto-parallel  | tp    | [tensor parallelism](./tensor-parallelism.md)  |
 |                       | pp    | [pipeline parallelism](./pipeline-parallelism.md)  |
-|                       | hsdp  | [hsdp parallelism]()  |
+|                       | hsdp  | [optimizer parallelism](./optimizer-parallelism.md)  |
 ||||
 | custom-parallel       | tp    | [custom tensor parallelism]()  |
 |                       | pp    | [custom pipeline parallelism]()  |

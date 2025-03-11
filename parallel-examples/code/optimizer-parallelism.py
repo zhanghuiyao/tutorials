@@ -38,12 +38,8 @@ class Mlp(nn.Cell):
 
 net = Mlp(num_layers=4)
 
-# optimizer-parallelism communication fusion setting
-net.layers[0].set_comm_fusion(0)
-net.layers[1].set_comm_fusion(1)
-net.layers[2].set_comm_fusion(2)
-net.layers[3].set_comm_fusion(3)
-
+# (option) enable communication fusion
+net.set_comm_fusion(1)
 
 net.set_train()
 optimizer = nn.AdamWeightDecay(net.trainable_params(), learning_rate=0.01)

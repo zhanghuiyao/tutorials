@@ -1,7 +1,30 @@
 # MindSpore流水线并行实践指南
 
-本教程基于MindSpore2.5版本，演示如何使用流水线并行技术加速模型训练。示例代码需要 4张 Ascend 910* 卡运行。
+本教程基于 MindSpore 2.5.0 版本，演示如何使用流水线并行技术加速模型训练。示例代码在 4张 Ascend 910* 卡运行。
 
+
+## 0. 流水线并行介绍 (introduction)
+
+流水线并行技术将计算任务划分为连续阶段，分布到不同处理单元，数据按微批次流经各阶段以提升吞吐量。其核心通过时间-空间维度并行，突破单设备内存限制，适用于大模型训练（如Transformer）。不同于数据并行（多设备处理不同数据）和模型并行（拆分模型层），流水线并行强调阶段(pipeline stage)间流水调度，但存在“气泡”(Bubble)和通信开销。关键实现包括负载均衡、微批次(micro-batch)划分及同步策略（如GPipe, Interleave等）。尽管实现复杂，结合模型/数据并行后，成为分布式训练超大规模AI系统的核心方案。
+
+**整体示意图：**
+
+<figure>
+  <img src="image-pp-1.png" alt="">
+  <figcaption align="center">图1</figcaption>
+</figure>
+
+**实现原理：**
+
+<figure>
+  <img src="image-pp-2.png" alt="">
+  <figcaption align="center">图2：mindspore 1f1b 流水线并行调度示意图</figcaption>
+</figure>
+
+<figure>
+  <img src="image-pp-3.png" alt="">
+  <figcaption align="center">图3：mindspore interleaved 流水线并行调度示意图</figcaption>
+</figure>
 
 ## 1. 流水线并行核心配置 (init and setting)
 
@@ -12,10 +35,10 @@ context.set_context(mode=context.GRAPH_MODE)
 # 配置半自动并行策略
 mindspore.set_auto_parallel_context(
     parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL,
-    pipeline_stages=4,
+    pipeline_stages=4,                  # 一共有4个pipeline stage
     pipeline_config={
-        'pipeline_scheduler': '1f1b',  # 使用1F1B调度策略
-        'pipeline_interleave': True    # 启用流水线交错
+        'pipeline_scheduler': '1f1b',   # 使用1F1B调度策略
+        'pipeline_interleave': True     # 启用流水线交错
     }
 )
 
@@ -59,7 +82,7 @@ pp_net = nn.PipelineCell(net, micro_size=4)  # micro_batch_size=4
 > ⚠️ 注意：用于进行流水线并行的模型需要使用 `@mindspore.lazy_inline` 装饰器。
 
 
-## 3. 运行 (running)
+## 3. 训练 (training)
 
 ```python
 # 初始化优化器和梯度函数
@@ -86,14 +109,24 @@ for i in range(100):
 ```
 
 
-## 4. 运行结果示例
+## 4. 运行示例代码 (running)
 
-典型输出：
+```shell
+# 运行示例代码，使用前4张卡
+ASCEND_RT_VISIBLE_DEVICES=0,1,2,3 msrun --bind_core=True --worker_num=4 --local_worker_num=4 --master_port 9001 --log_dir=outputs/parallel_logs \
+python -u code/pipeline-parallelism.py
+
+# 查看日志 (pipeline并行一般查看最后一个节点的日志)
+tail -f outputs/parallel_logs/worker_3.log
 ```
-step: 10, loss: 0.8932, time cost: 152.34 ms
-step: 20, loss: 0.7615, time cost: 148.91 ms
-step: 30, loss: 0.6543, time cost: 149.12 ms
+
+输出打印：
+```
+step: 10, loss: 3.8794, time cost: 11007.34 ms
+step: 20, loss: 3.8757, time cost: 68.16 ms
+step: 30, loss: 3.8719, time cost: 65.93 ms
 ...
+
 net.layers[get_rank()].weight.shape=(512, 512), grads[0].shape=(512, 512)
 ```
 
@@ -101,22 +134,20 @@ net.layers[get_rank()].weight.shape=(512, 512), grads[0].shape=(512, 512)
 ## 5. 关键注意事项
 
 1. **设备分配**：需要保证`pipeline_stages`数量能被实际使用的GPU数量整除。
-2. **数据规范**：batch_size必须能被micro_batch_size整除
-3. **装饰器要求**：使用`@lazy_inline`装饰模型初始化方法
-4. **调度策略**：1F1B调度策略适合大多数场景，也可尝试`gpipe`策略
-5. **性能调优**：可通过调整`pipeline_interleave`和`micro_size`优化吞吐
+2. **数据规范**：`micro-batch`大小需能被`batch-size`整除。
+3. **装饰器要求**：使用`@mindspore.lazy_inline`装饰模型初始化方法
 
 
 ## 6. 常见问题
 
 **Q1: 如何验证流水线并行是否正确工作？**
-A: 检查不同stage的GPU显存占用情况，各卡应有相似的显存使用量
+A: 检查不同stage的NPU卡显存占用情况，各卡应有相似的显存使用量。
 
-**Q2: 出现"Shape mismatch"错误怎么办？**
-A: 检查各stage的输入输出维度是否匹配，确保相邻stage的矩阵维度兼容
+**Q2: 如何扩展更多流水线阶段？**
+A: 增加pipeline_stages参数值，并相应调整模型层的stage分配。
 
-**Q3: 如何扩展更多流水线阶段？**
-A: 增加pipeline_stages参数值，并相应调整模型层的stage分配
+**Q3: 微批次大小如何选择？**
+A: 通常设置为总批次大小的约数，可通过实验选择吞吐量最大的值。
 
-**Q4: 微批次大小如何选择？**
-A: 通常设置为总批次大小的约数，可通过实验选择吞吐量最大的值
+**Q4: 有没有关于流水线并行以及相关接口的更详细说明？**
+A: 有，可以在[MindSpore网站](https://www.mindspore.cn/docs/zh-CN/master/model_train/parallel/pipeline_parallel.html)搜索“流水线并行”。
