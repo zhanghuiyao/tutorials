@@ -7,8 +7,8 @@ from mindspore.communication.management import init
     
 
 context.set_context(mode=context.GRAPH_MODE)
-# mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, enable_parallel_optimizer=True)
-# init()
+mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, enable_parallel_optimizer=True)
+init()
 
 
 class Mlp(nn.Cell):
@@ -39,10 +39,10 @@ class Mlp(nn.Cell):
 net = Mlp(num_layers=4)
 
 # optimizer-parallelism comm fusion setting
-# net.layers[0].set_comm_fusion(0)
-# net.layers[1].set_comm_fusion(1)
-# net.layers[2].set_comm_fusion(2)
-# net.layers[3].set_comm_fusion(3)
+net.layers[0].set_comm_fusion(0)
+net.layers[1].set_comm_fusion(1)
+net.layers[2].set_comm_fusion(2)
+net.layers[3].set_comm_fusion(3)
 net.set_train()
 
 
@@ -72,6 +72,6 @@ for i in range(100):
 
 
 
-# single
-# op-w/o-comm: 1.2 GB
-# op-w-comm: 
+# single        : 1.4 GB
+# op-w/o-comm   : 1.2 GB
+# op-w-comm     : 
