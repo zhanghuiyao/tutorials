@@ -7,8 +7,8 @@ from mindspore.communication.management import init
     
 
 context.set_context(mode=context.GRAPH_MODE)
-mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, enable_parallel_optimizer=True)
-init()
+# mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, enable_parallel_optimizer=True)
+# init()
 
 
 class Mlp(nn.Cell):
@@ -69,3 +69,9 @@ for i in range(100):
     
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
+
+
+
+# single
+# op-w/o-comm: 1.2 GB
+# op-w-comm: 
