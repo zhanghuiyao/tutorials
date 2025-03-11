@@ -8,8 +8,8 @@ from mindspore.communication.management import init
     
 
 context.set_context(mode=context.GRAPH_MODE)
-# mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
-# mindspore.set_auto_parallel_context(pipeline_config={'pipeline_scheduler':'1f1b', 'pipeline_interleave':True})
+mindspore.set_auto_parallel_context(parallel_mode=mindspore.ParallelMode.SEMI_AUTO_PARALLEL, pipeline_stages=4)
+mindspore.set_auto_parallel_context(pipeline_config={'pipeline_scheduler':'1f1b', 'pipeline_interleave':True})
 init()
 
 
@@ -44,22 +44,18 @@ class Mlp(nn.Cell):
 
 
 net = Mlp(num_layers=4)
-optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 
-# pipeline-parallelism setting
-stage_config = {
-    "layers.0": 0,  # stage 0
-    "layers.1": 1,  # stage 1
-    "layers.2": 2,  # stage 2
-    "layers.3": 3, "loss_fn": 3  # stage 3
-}
-pp_net = nn.PipelineCell(net, micro_size=4, stage_config=stage_config)
-pp_net = AutoParallel(pp_net, parallel_mode="semi_auto")
-pp_net.full_batch = True
-pp_net.pipeline(stages=4, scheduler="1f1b", interleave=True)
+
+# pipeline-parallelism stage setting
+net.layers[0].pipeline_stage = 0
+net.layers[1].pipeline_stage = 1
+net.layers[2].pipeline_stage = 2
+net.layers[3].pipeline_stage = 3
+pp_net = nn.PipelineCell(net, micro_size=4)
 pp_net.set_train()
 
 
+optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
 pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
 
