@@ -14,7 +14,7 @@ init()
 class Mlp(nn.Cell):
     
     # @mindspore.lazy_inline  # lazy_inline is not required in optimizer-parallelism
-    def __init__(self, num_layers: int = 4, in_channel: int = 512, out_channel: int = 512):
+    def __init__(self, num_layers: int = 4, in_channel: int = 4096, out_channel: int = 4096):
         super().__init__()
         
         layers = [nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)]
@@ -59,7 +59,7 @@ def train_step(inputs, target):
     return loss, grads
 
 
-x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
+x, y = Tensor(np.random.randn(4, 4096), mindspore.float32), Tensor(np.ones((4, 4096)), mindspore.float32)
 
 for i in range(100):
     
