@@ -39,10 +39,10 @@ class Mlp(nn.Cell):
 net = Mlp(num_layers=4)
 
 # optimizer-parallelism comm fusion setting
-net.layers[0].set_comm_fusion(0)
-net.layers[1].set_comm_fusion(1)
-net.layers[2].set_comm_fusion(2)
-net.layers[3].set_comm_fusion(3)
+# net.layers[0].set_comm_fusion(0)
+# net.layers[1].set_comm_fusion(1)
+# net.layers[2].set_comm_fusion(2)
+# net.layers[3].set_comm_fusion(3)
 net.set_train()
 
 
@@ -58,13 +58,14 @@ def train_step(inputs, target):
     optimizer(grads)
     return loss, grads
 
+
 x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
 
-s_time = time.time()
 for i in range(100):
     
+    s_time = time.time()
+
     loss, grads = train_step(x, y)
     
     if (i+1) % 10 == 0:
-        print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
-        s_time = time.time()
+        print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
