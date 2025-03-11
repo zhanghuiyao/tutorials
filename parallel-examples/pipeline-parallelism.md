@@ -10,20 +10,20 @@
 **整体示意图：**
 
 <figure>
-  <img src="image-pp-1.png" alt="" style="width:800px;">
+  <img src="image-pp-1.png" alt="" style="width:800px;" />
   <figcaption align="center">图1</figcaption>
 </figure>
 
 **实现原理：**
 
 <figure>
-  <img src="image-pp-2.png" alt="" style="width:800px;">
+  <img src="image-pp-2.png" alt="" style="width:800px;" />
   <figcaption align="center">图2：mindspore 1f1b 流水线并行调度示意图</figcaption>
 </figure>
 
 <figure>
-  <img src="image-pp-3.png" alt="" style="width:800px;">
-  <figcaption align="center">图3：mindspore interleaved 流水线并行调度示意图</figcaption>
+  <img src="image-pp-3.png" alt="" style="width:800px;" />
+  <figcaption style="text-align:center;">图3：mindspore interleaved 流水线并行调度示意图</figcaption>
 </figure>
 
 ## 1. 流水线并行核心配置 (init and setting)
