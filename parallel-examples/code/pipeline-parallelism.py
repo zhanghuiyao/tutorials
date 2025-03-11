@@ -28,6 +28,7 @@ class Mlp(nn.Cell):
         self.loss_fn = nn.MSELoss()
 
     def construct(self, x: Tensor, labels: Tensor = None):
+        
         for layer in self.layers:
             x = layer(x)
 
@@ -46,9 +47,9 @@ net.layers[2].pipeline_stage = 2
 net.layers[3].pipeline_stage = 3
 net.loss_fn.pipeline_stage = 3
 pp_net = nn.PipelineCell(net, micro_size=4)
+
+
 pp_net.set_train()
-
-
 optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 grad_fn = ops.value_and_grad(pp_net, None, optimizer.parameters)
 pp_grad_reducer = nn.PipelineGradReducer(optimizer.parameters)
@@ -61,6 +62,8 @@ def train_step(inputs, target):
     optimizer(grads)
     return loss, grads
 
+
+# batch-size must be divisible by micro-batch-size
 x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
 
 s_time = time.time()

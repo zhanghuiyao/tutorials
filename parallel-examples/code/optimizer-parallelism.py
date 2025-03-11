@@ -14,7 +14,7 @@ init()
 class Mlp(nn.Cell):
     
     # @mindspore.lazy_inline  # lazy_inline is not required in optimizer-parallelism
-    def __init__(self, num_layers: int = 4, in_channel: int = 4096, out_channel: int = 4096):
+    def __init__(self, num_layers: int = 4, in_channel: int = 512, out_channel: int = 512):
         super().__init__()
         
         layers = [nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)]
@@ -38,14 +38,14 @@ class Mlp(nn.Cell):
 
 net = Mlp(num_layers=4)
 
-# optimizer-parallelism comm fusion setting
+# optimizer-parallelism communication fusion setting
 net.layers[0].set_comm_fusion(0)
 net.layers[1].set_comm_fusion(1)
 net.layers[2].set_comm_fusion(2)
 net.layers[3].set_comm_fusion(3)
+
+
 net.set_train()
-
-
 optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 grad_fn = ops.value_and_grad(net, None, optimizer.parameters)
 grad_reducer = nn.Identity()
@@ -59,7 +59,7 @@ def train_step(inputs, target):
     return loss, grads
 
 
-x, y = Tensor(np.random.randn(4, 4096), mindspore.float32), Tensor(np.ones((4, 4096)), mindspore.float32)
+x, y = Tensor(np.random.randn(1, 512), mindspore.float32), Tensor(np.ones((1, 512)), mindspore.float32)
 
 for i in range(100):
     
@@ -69,9 +69,3 @@ for i in range(100):
     
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
-
-
-
-# single        : 1.4 GB
-# op-w/o-comm   : 1.2 GB
-# op-w-comm     : 
