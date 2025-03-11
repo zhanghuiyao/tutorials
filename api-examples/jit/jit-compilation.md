@@ -187,9 +187,9 @@ GLOG_v=3 python -u simple_funtion.py
 
 #### ⚠️ 注意:
 
-1、上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
-2、*准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
-3、*运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
+1. 上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
+2. *准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
+3. *运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
 
 #### ⚠️ 一些限制:
 
@@ -223,6 +223,6 @@ GLOG_v=3 python -u simple_conv.py
 
 #### ⚠️ 注意:
 
-1、上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
-2、*准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
-3、*运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
+1. 上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
+2. *准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
+3. *运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
