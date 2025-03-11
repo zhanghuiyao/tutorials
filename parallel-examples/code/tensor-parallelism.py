@@ -72,5 +72,5 @@ for i in range(100):
         print(f"step: {i+1}, loss: {loss}, per step time: {(time.time()-s_time)*1000:.2f} ms")
 
 
-print(f"{net.weight1.shape=}")
-print(f"{grads[0].shape=}")
+print(f"{net.weight1.shape=}, {grads[0].shape=}")   # matmul1 weight shard to (2, 1)
+print(f"{net.weight2.shape=}, {grads[1].shape=}")   # matmul2 weight shard to (4, 1)
