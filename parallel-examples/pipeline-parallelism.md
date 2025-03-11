@@ -9,21 +9,21 @@
 
 **整体示意图：**
 
-<figure>
-  <img src="image-pp-1.png" alt="" style="width:800px;" />
-  <p align="center">图1</p>
-</figure>
+<p align="center">
+  <img src="image-pp-1.png" alt="" style="width:800px;"/><br/>
+  <em>图1：这里是图片说明</em>
+</p>
 
 
 **实现原理：**
 
 <figure>
-  <img src="image-pp-2.png" alt="" style="width:800px;" />
+  <img src="image-pp-2.png" alt="" style="width:800px;"/>
   <figcaption align="center">图2：mindspore 1f1b 流水线并行调度示意图</figcaption>
 </figure>
 
 <figure>
-  <img src="image-pp-3.png" alt="" style="width:800px;" />
+  <img src="image-pp-3.png" alt="" style="width:800px;"/>
   <figcaption style="text-align:center;">图3：mindspore interleaved 流水线并行调度示意图</figcaption>
 </figure>
 
