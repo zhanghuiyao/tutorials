@@ -11,8 +11,9 @@
 
 <figure>
   <img src="image-pp-1.png" alt="" style="width:800px;" />
+  <p align="center">图1</p>
 </figure>
-<p align="center">图1</p>
+
 
 **实现原理：**
 
