@@ -59,7 +59,8 @@ def train_step(inputs, target):
     return loss, grads
 
 
-x, y = Tensor(np.random.randn(1, 512), mindspore.float32), Tensor(np.ones((1, 512)), mindspore.float32)
+x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
+
 
 for i in range(100):
     
