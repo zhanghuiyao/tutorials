@@ -50,6 +50,7 @@ net.layers[0].pipeline_stage = 0
 net.layers[1].pipeline_stage = 1
 net.layers[2].pipeline_stage = 2
 net.layers[3].pipeline_stage = 3
+net.loss_fn.pipeline_stage = 3
 pp_net = nn.PipelineCell(net, micro_size=4)
 pp_net.set_train()
 
@@ -68,11 +69,11 @@ def train_step(inputs, target):
 
 x, y = Tensor(np.random.randn(4, 512), mindspore.float32), Tensor(np.ones((4, 512)), mindspore.float32)
 
+s_time = time.time()
 for i in range(100):
-
-    s_time = time.time()
     
     loss, grads = train_step(x, y)
     
     if (i+1) % 10 == 0:
         print(f"step: {i+1}, loss: {loss}, time cost: {(time.time()-s_time)*1000:.2f} ms")
+        s_time = time.time()
