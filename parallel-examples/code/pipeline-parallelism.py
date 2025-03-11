@@ -17,7 +17,7 @@ context.set_context(mode=context.GRAPH_MODE)
 class Mlp(nn.Cell):
     
     @mindspore.lazy_inline  # lazy_inline is must
-    def __init__(self, num_layers: int = 8, in_channel: int = 512, out_channel: int = 512):
+    def __init__(self, num_layers: int = 4, in_channel: int = 512, out_channel: int = 512):
         super().__init__()
         
         layers = [nn.Dense(in_channel, out_channel, activation="relu", has_bias=False)]
@@ -27,7 +27,7 @@ class Mlp(nn.Cell):
             )
         self.layers = nn.CellList(layers)
 
-        self.loss_fn = nn.CrossEntropyLoss()
+        self.loss_fn = nn.MSELoss()
 
     def construct(self, x: Tensor, labels: Tensor = None):
         
@@ -44,7 +44,7 @@ class Mlp(nn.Cell):
         return loss
 
 
-net = Mlp(num_layers=8)
+net = Mlp(num_layers=4)
 optimizer = nn.SGD(net.trainable_params(), learning_rate=0.01)
 
 # pipeline-parallelism setting
