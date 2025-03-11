@@ -197,7 +197,7 @@ GLOG_v=3 python -u simple_funtion.py
 2. 当构建图的方式选择为trace的时候不支持直接通过`mindspore.jit(f, capture_mode="trace", ...)`的方式转换，需要通过装饰器`@mindspore.jit(capture_mode="trace", ...)`用法对函数进行包装。
 
 
-## 3.2. 测试一个简单的模块
+### 3.2. 测试一个简单的模块
 
 我们定义一个在经典网络`resnet`中使用到的核心模块`BasicBlock`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
