@@ -69,7 +69,6 @@ print(f"{out=}")
 - fullgraph: 是否将整个函数编译为`图`，默认为False，jit会尽可能兼容函数中的python语法，打开为True一般可以获得更好的性能，但对语法要求更高。
 - backend: 用于指定编译的后端。
 
-
 ### 2.2. 使用方法
 
 ```python
