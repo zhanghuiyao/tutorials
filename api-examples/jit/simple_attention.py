@@ -162,17 +162,21 @@ def fp_and_bp(*args, **kwargs):
 def run_func(f: Callable, des:str = "function"):
 
     s_time = time.time()
+    _x = [np.random.randn(1, 512, 4096) for _ in range(1000)]
+    print(f"init np.random.randn time cost: {time.time()-s_time:.2f}s")
+
+    s_time = time.time()
     
     x = Tensor(np.random.randn(1, 512, 4096), mindspore.float32)
-    position_ids = ops.arange(2048, dtype=mindspore.int32).unsqueeze(0)
+    position_ids = ops.arange(512, dtype=mindspore.int32).unsqueeze(0)
     out = f(x, None, position_ids)
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
-        x = Tensor(np.random.randn(1, 2048, 4096), mindspore.float32)
-        position_ids = ops.arange(2048, dtype=mindspore.int32).unsqueeze(0)
+        x = Tensor(np.random.randn(1, 512, 4096), mindspore.float32)
+        position_ids = ops.arange(512, dtype=mindspore.int32).unsqueeze(0)
         out = f(x, None, position_ids)
 
     time_to_run_thousand_times = time.time() - s_time
