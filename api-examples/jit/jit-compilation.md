@@ -212,15 +212,17 @@ python simple_conv.py
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~6.86s | ~1.91s    |
-| true  | O0    | ast        | ms_backend    | false | ~0.88s | **~1.09s**    |
+| false | -     | -          | -             | -     | ~6.86s | ~1.80s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.88s | **~1.00s**    |
+| true  | O1    | ast        | ms_backend    | false | ~0.68s | ~1.06s    |
 
 **forward + backward**
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~1.93s | ~6.17s    |
-| true  | O0    | ast        | ms_backend    | false | ~0.84s | **~1.94s**    |
+| false | -     | -          | -             | -     | ~1.93s | ~5.69s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.84s | ~1.89s    |
+| true  | O1    | ast        | ms_backend    | false | ~0.80s | **~1.87s**    |
 
 #### ⚠️ 注意:
 
@@ -244,15 +246,17 @@ python simple_attention.py
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~4.64s | ~5.19s    |
-| true  | O0    | ast        | ms_backend    | false | ~1.76s | **~4.61s**    |
+| false | -     | -          | -             | -     | ~4.73s | ~4.28s    |
+| true  | O0    | ast        | ms_backend    | false | ~1.69s | ~4.46s    |
+| true  | O1    | ast        | ms_backend    | false | ~1.38s | **~2.15s**    |
 
 **forward + backward**
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~0.15s | ~10.77s    |
-| true  | O0    | ast        | ms_backend    | false | ~1.59s | **~5.67s**    |
+| false | -     | -          | -             | -     | ~0.16s | ~12.15s    |
+| true  | O0    | ast        | ms_backend    | false | ~1.78s | ~5.30s    |
+| true  | O1    | ast        | ms_backend    | false | ~1.69s | **~3.12s**    |
 
 #### ⚠️ 注意:
 
