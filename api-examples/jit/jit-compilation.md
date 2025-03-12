@@ -73,6 +73,8 @@ print(f"{out=}")
 ### 2.2. 使用方法
 
 ```python
+import mindspore
+
 # 使用ast的方式构建图
 jitted_by_ast_and_levelO0_f = mindspore.jit(f, capture_mode="ast", jit_level="O0") # 这个是默认配置，跟上面的jitted_f是一样的
 jitted_by_ast_and_levelO1_f = mindspore.jit(f, capture_mode="ast", jit_level="O1")
