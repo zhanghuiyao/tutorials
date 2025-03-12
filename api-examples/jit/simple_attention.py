@@ -182,8 +182,8 @@ def run_func(f: Callable, des:str = "function"):
 
 
 # # run origin block
-# run_func(fp, des="origin block fp")
-# run_func(fp_and_bp, des="origin block fp+bp")
+run_func(fp, des="origin block fp")
+run_func(fp_and_bp, des="origin block fp+bp")
 
 
 # run jitted block fp
