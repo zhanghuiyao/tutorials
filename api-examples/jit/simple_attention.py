@@ -149,13 +149,13 @@ block = LlamaAttention(Config())
 grad_fn = mindspore.value_and_grad(block, None, block.trainable_params(), has_aux=False)
 
 
-def fp(x):
-    out = block(x)
+def fp(*args, **kwargs):
+    out = block(*args, **kwargs)
     return out
 
 
-def fp_and_bp(x):
-    out, grads = grad_fn(x)
+def fp_and_bp(*args, **kwargs):
+    out, grads = grad_fn(*args, **kwargs)
     return out, grads
 
 
