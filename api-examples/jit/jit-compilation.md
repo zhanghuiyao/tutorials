@@ -42,25 +42,24 @@ jitted_defult_f = mindspore.jit(f)
 ```python
 import time
 
-f_input = [Tensor(np.full((2, 3), i), mindspore.float32) for i in range(3)]
-print(f"function input: {f_input}")
+# 构造数据
+dataset = [[Tensor(np.random.randn(2, 3), mindspore.float32) for _ in range(3)] for i in range(1000)]
 
 # 运行原始函数1000次
 s_time = time.time()
-for _ in range(1000):
-    out = f(*f_input)
+for i in range(1000):
+    out = f(*dataset[i])
 print(f"{out=}, time cost: {(time.time()-s_time)*1000:.2f}ms")
 
-
-# 运行jit后的函数1000次
+# 运行jit转换后的函数1000次
 s_time = time.time()
 for _ in range(1000):
-    out = jitted_defult_f(*f_input)
+    out = jitted_defult_f(*dataset[i])
 print(f"{out=}, time cost: {(time.time()-s_time)*1000:.2f}ms")
 ```
 
 
-## 2. 更高级的用法
+## 2. 更多的用法
 
 ### 2.1. 常用配置介绍
 
@@ -136,14 +135,14 @@ function_dict = {
 for s, f in function_dict.items():
     s_time = time.time()
     
-    out = f(*f_input)
+    out = f(*dataset[0])
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     # 每个函数都运行1000次
     for _ in range(1000):
-        out = f(*f_input)
+        out = f(*dataset[i])
     
     time_to_run_thousand_times = time.time() - s_time
 
