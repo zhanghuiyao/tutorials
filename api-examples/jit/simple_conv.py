@@ -73,6 +73,8 @@ def run_func(f: Callable, des:str = "function"):
     s_time = time.time()
 
     dataset = [Tensor(np.ones((1, 128, 256, 256))*np.random.randn(1), mindspore.float32) for _ in range(1000)]
+    print(f"time init dataset: {time.time()-s_time:.2f}s")
+
     out = f(dataset[0])
 
     time_to_prepare = time.time() - s_time
