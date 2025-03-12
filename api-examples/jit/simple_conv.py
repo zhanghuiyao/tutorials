@@ -78,9 +78,8 @@ def run_func(f: Callable, des:str = "function"):
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
-    for _ in range(1000):
-        x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
-        out = f(x)
+    for i in range(1000):
+        out = f(x*(i/1000))   # change input values per step to avoid reuse previous results
 
     time_to_run_thousand_times = time.time() - s_time
 
