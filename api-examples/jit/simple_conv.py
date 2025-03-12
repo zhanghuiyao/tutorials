@@ -69,11 +69,8 @@ def fp_and_bp(x):
     return out, grads
 
 
-def run_func(f: Callable, des:str = "function"):
+def run_func(f: Callable, dataset: list, des:str = "function"):
     s_time = time.time()
-
-    dataset = [Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)*float(np.random.randn(1)) for i in range(1000)]
-    print(f"time init dataset: {time.time()-s_time:.2f}s")
 
     out = f(dataset[0])
 
@@ -87,6 +84,11 @@ def run_func(f: Callable, des:str = "function"):
 
     s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
     print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
+
+
+s_time = time.time()
+dataset = [Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32) for i in range(1000)]
+print(f"time init dataset: {time.time()-s_time:.2f}s")
 
 
 # run origin block
