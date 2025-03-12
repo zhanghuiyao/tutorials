@@ -159,7 +159,8 @@ for s, f in function_dict.items():
 我们定义一个函数 `funtion(a,b,c)=a*b+c`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-GLOG_v=3 python -u simple_funtion.py
+export GLOG_v=3  # 可选，设置更高的MindSpore日志以减少一些打印让结果看起来更美观
+python -u simple_funtion.py
 ```
 
 结果如下：
@@ -197,12 +198,12 @@ GLOG_v=3 python -u simple_funtion.py
 2. 当构建图的方式选择为trace的时候不支持直接通过`mindspore.jit(f, capture_mode="trace", ...)`的方式转换，需要通过装饰器`@mindspore.jit(capture_mode="trace", ...)`用法对函数进行包装。
 
 
-### 3.2. 测试一个简单的模块
+### 3.2. 测试一个简单的卷积模块 (Conv Module)
 
 我们定义一个在经典网络`resnet`中使用到的核心模块`BasicBlock`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-GLOG_v=3 python -u simple_conv.py
+python -u simple_conv.py
 ```
 
 结果如下：
@@ -211,18 +212,51 @@ GLOG_v=3 python -u simple_conv.py
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~6.25s | ~1.73s    |
-| true  | O0    | ast        | ms_backend    | false | ~0.34s | **~0.44s**    |
+| false | -     | -          | -             | -     | ~6.53s | ~1.68s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.84s | **~0.88s**    |
 
 **forward + backward**
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~1.49s | ~5.19s    |
-| true  | O0    | ast        | ms_backend    | false | ~0.62s | **~0.52s**    |
+| false | -     | -          | -             | -     | ~2.02s | ~4.22s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.82s | **~1.89s**    |
 
 #### ⚠️ 注意:
 
 1. 上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
 2. *准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
 3. *运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
+
+
+### 3.3. 测试一个简单的注意力模块 (Attention Module)
+
+
+我们定义一个在经典网络`llama3`中使用到的核心模块`LlamaAttention`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
+
+```shell
+python -u simple_attention.py
+```
+
+结果如下：
+
+**forward**
+
+| enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
+| --- | --- | --- | --- | --- | --- | --- |
+| false | -     | -          | -             | -     | ~5.76s | ~4.87s    |
+| true  | O0    | ast        | ms_backend    | false | ~1.65s | **~3.41s**    |
+
+**forward + backward**
+
+| enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
+| --- | --- | --- | --- | --- | --- | --- |
+| false | -     | -          | -             | -     | ~0.15s | ~10.12s    |
+| true  | O0    | ast        | ms_backend    | false | ~1.68s | **~6.38s**    |
+
+#### ⚠️ 注意:
+
+1. 上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
+2. *准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
+3. *运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
+

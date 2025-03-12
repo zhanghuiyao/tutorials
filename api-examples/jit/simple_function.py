@@ -5,10 +5,6 @@ import mindspore
 from mindspore import Tensor
 
 
-f_input = [Tensor(np.full((2, 3), i), mindspore.float32) for i in range(3)]
-
-print(f"function input: {f_input}")
-
 def f(a, b, c):
     return a * b + c
 
@@ -78,20 +74,20 @@ function_dict = {
 }
 
 
+dataset = [[Tensor(np.random.randn(2, 3), mindspore.float32) for ii in range(3)] for i in range(1000)]
 
 # compare time cost
 for s, f in function_dict.items():
     s_time = time.time()
     
-    out = f(*f_input)
+    out = f(*dataset[0])
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
-    for _ in range(1000):
-        out = f(*f_input)
+    for i in range(1000):
+        out = f(*dataset[i])
     
     time_to_run_thousand_times = time.time() - s_time
 
     print(f"{s}, out shape: {out.shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
-
