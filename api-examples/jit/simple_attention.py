@@ -171,7 +171,8 @@ def run_func(f: Callable, des:str = "function"):
     s_time = time.time()
 
     for i in range(1000):
-        out = f(x*(i/1000), None, position_ids)
+        # out = f(x*(i/1000), None, position_ids)
+        out = f(x, None, position_ids)
 
     time_to_run_thousand_times = time.time() - s_time
 
