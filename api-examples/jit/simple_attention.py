@@ -93,7 +93,7 @@ class LlamaAttention(nn.Cell):
         return q_embed, k_embed
 
 
-    def repeat_kv(hidden_states: mindspore.Tensor, n_rep: int) -> mindspore.Tensor:
+    def repeat_kv(self, hidden_states: mindspore.Tensor, n_rep: int) -> mindspore.Tensor:
         batch, num_key_value_heads, slen, head_dim = hidden_states.shape
         if n_rep == 1:
             return hidden_states
