@@ -167,23 +167,23 @@ python simple_funtion.py
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~4.16s | **~0.06s**    |
+| false | -     | -          | -             | -     | ~4.16s | **~0.09s**    |
 ||
-| true  | O0    | ast        | ms_backend    | false | ~0.21s | **~0.50s**   |
-| true  | O1    | ast        | ms_backend    | false | ~0.03s | ~0.51s   |
-| true  | -     | ast        | ge            | false | ~1.01s | ~1.04s   |
+| true  | O0    | ast        | ms_backend    | false | ~0.21s | **~0.53s**   |
+| true  | O1    | ast        | ms_backend    | false | ~0.03s | ~0.54s   |
+| true  | -     | ast        | ge            | false | ~1.01s | ~1.03s   |
 ||
-| true  | O0    | bytecode   | ms_backend    | false | ~0.13s | **~0.72s**   |
-| true  | O1    | bytecode   | ms_backend    | false | ~0.00s | ~0.74s   |
-| true  | -     | bytecode   | ge            | false | ~0.00s | ~0.74s   |
+| true  | O0    | bytecode   | ms_backend    | false | ~0.13s | **~0.69s**   |
+| true  | O1    | bytecode   | ms_backend    | false | ~0.00s | ~0.71s   |
+| true  | -     | bytecode   | ge            | false | ~0.00s | ~0.70s   |
 ||
-| true  | O0    | trace      | ms_backend    | false | ~0.17s | ~3.34s   |
-| true  | O1    | trace      | ms_backend    | false | ~0.15s | **~2.38s**   |
-| true  | -     | trace      | ge            | false | ~0.17s | ~3.49s   |
+| true  | O0    | trace      | ms_backend    | false | ~0.17s | ~3.46s   |
+| true  | O1    | trace      | ms_backend    | false | ~0.15s | ~3.45s   |
+| true  | -     | trace      | ge            | false | ~0.17s | **~3.42s**   |
 ||
-| true  | O0    | ast        | ms_backend    | true  | ~0.02s | **~0.56s**   |
-| true  | O1    | ast        | ms_backend    | true  | ~0.03s | **~0.56s**   |
-| true  | -     | ast        | ge            | true  | ~0.14s | ~1.03s   |
+| true  | O0    | ast        | ms_backend    | true  | ~0.02s | ~0.54s   |
+| true  | O1    | ast        | ms_backend    | true  | ~0.03s | **~0.53s**   |
+| true  | -     | ast        | ge            | true  | ~0.14s | ~0.99s   |
 
 
 #### ⚠️ 注意:
@@ -212,15 +212,15 @@ python simple_conv.py
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~6.53s | ~1.68s    |
-| true  | O0    | ast        | ms_backend    | false | ~0.84s | **~0.88s**    |
+| false | -     | -          | -             | -     | ~6.86s | ~1.91s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.88s | **~1.09s**    |
 
 **forward + backward**
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~2.02s | ~4.22s    |
-| true  | O0    | ast        | ms_backend    | false | ~0.82s | **~1.89s**    |
+| false | -     | -          | -             | -     | ~1.93s | ~6.17s    |
+| true  | O0    | ast        | ms_backend    | false | ~0.84s | **~1.94s**    |
 
 #### ⚠️ 注意:
 
@@ -244,19 +244,18 @@ python simple_attention.py
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~5.76s | ~4.87s    |
-| true  | O0    | ast        | ms_backend    | false | ~1.65s | **~3.41s**    |
+| false | -     | -          | -             | -     | ~4.64s | ~5.19s    |
+| true  | O0    | ast        | ms_backend    | false | ~1.76s | **~4.61s**    |
 
 **forward + backward**
 
 | enable jit | jit level | capture mode | backend | fullgraph | *time to prepare | *time to run thousand times |
 | --- | --- | --- | --- | --- | --- | --- |
-| false | -     | -          | -             | -     | ~0.15s | ~10.12s    |
-| true  | O0    | ast        | ms_backend    | false | ~1.68s | **~6.38s**    |
+| false | -     | -          | -             | -     | ~0.15s | ~10.77s    |
+| true  | O0    | ast        | ms_backend    | false | ~1.59s | **~5.67s**    |
 
 #### ⚠️ 注意:
 
 1. 上述结果因设备和设备状态的不同而差异很大，数据仅供参考。
 2. *准备时间(time to prepare)：潜在的jitted对象重用和设备内存拷贝可能会导致比较不准确。
 3. *运行一千次的时间(time to run thousand times)：潜在的异步执行操作可能会导致测试时间不准确。
-

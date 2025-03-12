@@ -179,11 +179,12 @@ def run_func(f: Callable, des:str = "function"):
     print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
 
 
-# # run origin block
+# run fp
 run_func(fp, des="origin block fp")
-run_func(fp_and_bp, des="origin block fp+bp")
-
-
-# run jitted block fp
 run_func(mindspore.jit(fp), des="jitted block by default fp")
+run_func(mindspore.jit(fp, jit_level="O1"), des="jitted block by O1 fp")
+
+# run fp+bp
+run_func(fp_and_bp, des="origin block fp+bp")
 run_func(mindspore.jit(fp_and_bp), des="jitted block by default fp+bp")
+run_func(mindspore.jit(fp_and_bp, jit_level="O1"), des="jitted block by O1 fp+bp")
