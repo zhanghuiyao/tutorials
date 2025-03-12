@@ -42,6 +42,8 @@ jitted_f = mindspore.jit(f)
 ```python
 import time
 import numpy as np
+import mindspore
+from mindspore import Tensor
 
 # 构造数据
 f_input = [Tensor(np.random.randn(2, 3), mindspore.float32) for _ in range(3)]
