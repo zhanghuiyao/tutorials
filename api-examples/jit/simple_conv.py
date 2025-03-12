@@ -92,10 +92,10 @@ print(f"time init dataset: {time.time()-s_time:.2f}s")
 
 
 # run origin block
-run_func(fp, des="origin block fp")
-run_func(fp_and_bp, des="origin block fp+bp")
+run_func(fp, dataset, des="origin block fp")
+run_func(fp_and_bp, dataset, des="origin block fp+bp")
 
 
 # run jitted block fp
-run_func(mindspore.jit(fp), des="jitted block by default fp")
-run_func(mindspore.jit(fp_and_bp), des="jitted block by default fp+bp")
+run_func(mindspore.jit(fp), dataset, des="jitted block by default fp")
+run_func(mindspore.jit(fp_and_bp), dataset, des="jitted block by default fp+bp")
