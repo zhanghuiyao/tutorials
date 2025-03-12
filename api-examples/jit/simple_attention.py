@@ -163,7 +163,7 @@ def run_func(f: Callable, des:str = "function"):
 
     s_time = time.time()
     
-    x = Tensor(np.random.randn(10, 2048, 4096), mindspore.float32)
+    x = Tensor(np.random.randn(1, 2048, 4096), mindspore.float32)
     position_ids = ops.arange(2048, dtype=mindspore.int32).unsqueeze(0)
     f_input = [x, None, position_ids]
     out = f(*f_input)
@@ -171,6 +171,8 @@ def run_func(f: Callable, des:str = "function"):
     time_to_prepare = time.time() - s_time
     s_time = time.time()
     
+    import pdb;pdb.set_trace()
+
     for _ in range(1000):
         out = f(*f_input)
     
