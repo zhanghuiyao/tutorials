@@ -165,15 +165,16 @@ def run_func(f: Callable, des:str = "function"):
     
     x = Tensor(np.random.randn(1, 2048, 4096), mindspore.float32)
     position_ids = ops.arange(2048, dtype=mindspore.int32).unsqueeze(0)
-    f_input = [x, None, position_ids]
-    out = f(*f_input)
+    out = f(x, None, position_ids)
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     for _ in range(1000):
-        out = f(x*float(np.random.randn(1)), None, position_ids)
-    
+        x = Tensor(np.random.randn(1, 2048, 4096), mindspore.float32)
+        position_ids = ops.arange(2048, dtype=mindspore.int32).unsqueeze(0)
+        out = f(x, None, position_ids)
+
     time_to_run_thousand_times = time.time() - s_time
 
     s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
