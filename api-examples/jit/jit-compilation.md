@@ -159,8 +159,8 @@ for s, f in function_dict.items():
 我们定义一个函数 `funtion(a,b,c)=a*b+c`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-export GLOG_v=3  # 可选，设置更高的MindSpore日志以减少一些打印让结果看起来更美观
-python simple_funtion.py
+export GLOG_v=3  # 可选，设置更高的MindSpore日志级别以减少一些系统打印让结果看起来更美观
+python code/simple_funtion.py
 ```
 
 结果如下：
@@ -203,7 +203,7 @@ python simple_funtion.py
 我们定义一个在经典网络`resnet`中使用到的核心模块`BasicBlock`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-python simple_conv.py
+python code/simple_conv.py
 ```
 
 结果如下：
@@ -237,7 +237,7 @@ python simple_conv.py
 我们定义一个在经典网络`llama3`中使用到的核心模块`LlamaAttention`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-python simple_attention.py
+python code/simple_attention.py
 ```
 
 结果如下：
