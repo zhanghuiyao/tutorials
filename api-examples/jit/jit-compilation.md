@@ -34,28 +34,24 @@ def f(a: Tensor, b: Tensor, c: Tensor):
 ```python
 import mindspore
 
-jitted_defult_f = mindspore.jit(f)
+jitted_f = mindspore.jit(f)
 ```
 
-### 1.3. 构造数据并运行
+### 1.3. 运行
 
 ```python
 import time
 
 # 构造数据
-dataset = [[Tensor(np.random.randn(2, 3), mindspore.float32) for _ in range(3)] for i in range(1000)]
+f_input = [Tensor(np.random.randn(2, 3), mindspore.float32) for _ in range(3)]
 
-# 运行原始函数1000次
-s_time = time.time()
-for i in range(1000):
-    out = f(*dataset[i])
-print(f"{out=}, time cost: {(time.time()-s_time)*1000:.2f}ms")
+# 运行原始函数
+out = f(*f_input)
+print(f"{out=}")
 
-# 运行jit转换后的函数1000次
-s_time = time.time()
-for _ in range(1000):
-    out = jitted_defult_f(*dataset[i])
-print(f"{out=}, time cost: {(time.time()-s_time)*1000:.2f}ms")
+# 运行jit转换后的函数
+out = jitted_f(*f_input)
+print(f"{out=}")
 ```
 
 
@@ -75,7 +71,7 @@ print(f"{out=}, time cost: {(time.time()-s_time)*1000:.2f}ms")
 
 ```python
 # 使用ast的方式构建图
-jitted_by_ast_and_levelO0_f = mindspore.jit(f, capture_mode="ast", jit_level="O0") # 这个是默认配置，跟上面的jitted_defult_f是一样的
+jitted_by_ast_and_levelO0_f = mindspore.jit(f, capture_mode="ast", jit_level="O0") # 这个是默认配置，跟上面的jitted_f是一样的
 jitted_by_ast_and_levelO1_f = mindspore.jit(f, capture_mode="ast", jit_level="O1")
 jitted_by_ast_and_ge_f = mindspore.jit(f, capture_mode="ast", backend="GE")
 
@@ -108,7 +104,7 @@ jitted_by_ast_and_ge_fullgraph_f = mindspore.jit(f, capture_mode="ast", backend=
 function_dict = {
     "function ": f,
     
-    "function jitted by ast and levelO0": jitted_defult_f,
+    "function jitted by ast and levelO0": jitted_by_ast_and_levelO0_f,
     "function jitted by ast and levelO1": jitted_by_ast_and_levelO1_f,
     "function jitted by ast and ge": jitted_by_ast_and_ge_f,
     
@@ -132,6 +128,10 @@ function_dict = {
 ### 2.3. 运行
 
 ```python
+
+# 构造数据
+dataset = [[Tensor(np.random.randn(2, 3), mindspore.float32) for _ in range(3)] for i in range(1000)]
+
 for s, f in function_dict.items():
     s_time = time.time()
     
