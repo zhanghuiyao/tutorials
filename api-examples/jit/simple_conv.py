@@ -72,7 +72,8 @@ def fp_and_bp(x):
 def run_func(f: Callable, des:str = "function"):
     s_time = time.time()
 
-    dataset = [Tensor(np.ones((1, 128, 256, 256))*np.random.randn(1), mindspore.float32) for _ in range(1000)]
+    tmp = np.random.randn(1, 128, 256, 256)
+    dataset = [Tensor(tmp*np.random.randn(1), mindspore.float32) for _ in range(1000)]
     print(f"time init dataset: {time.time()-s_time:.2f}s")
 
     out = f(dataset[0])
