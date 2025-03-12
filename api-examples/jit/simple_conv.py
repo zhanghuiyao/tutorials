@@ -69,16 +69,17 @@ def fp_and_bp(x):
     return out, grads
 
 
-def run_func(f: Callable, dataset: list, des:str = "function"):
+def run_func(f: Callable, des:str = "function"):
     s_time = time.time()
 
-    out = f(dataset[0])
+    x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
+    out = f(x)
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     for i in range(1000):
-        out = f(dataset[i])
+        out = f(x*(i/1000))
 
     time_to_run_thousand_times = time.time() - s_time
 
@@ -86,16 +87,11 @@ def run_func(f: Callable, dataset: list, des:str = "function"):
     print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
 
 
-s_time = time.time()
-dataset = [Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32) for i in range(1000)]
-print(f"time init dataset: {time.time()-s_time:.2f}s")
-
-
 # run origin block
-run_func(fp, dataset, des="origin block fp")
-run_func(fp_and_bp, dataset, des="origin block fp+bp")
+run_func(fp, des="origin block fp")
+run_func(fp_and_bp, des="origin block fp+bp")
 
 
 # run jitted block fp
-run_func(mindspore.jit(fp), dataset, des="jitted block by default fp")
-run_func(mindspore.jit(fp_and_bp), dataset, des="jitted block by default fp+bp")
+run_func(mindspore.jit(fp), des="jitted block by default fp")
+run_func(mindspore.jit(fp_and_bp), des="jitted block by default fp+bp")

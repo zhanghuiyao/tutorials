@@ -160,7 +160,7 @@ for s, f in function_dict.items():
 
 ```shell
 export GLOG_v=3  # 可选，设置更高的MindSpore日志以减少一些打印让结果看起来更美观
-python -u simple_funtion.py
+python simple_funtion.py
 ```
 
 结果如下：
@@ -203,7 +203,7 @@ python -u simple_funtion.py
 我们定义一个在经典网络`resnet`中使用到的核心模块`BasicBlock`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-python -u simple_conv.py
+python simple_conv.py
 ```
 
 结果如下：
@@ -235,7 +235,7 @@ python -u simple_conv.py
 我们定义一个在经典网络`llama3`中使用到的核心模块`LlamaAttention`, 并使用 `mindspore.jit` 进行转换, 可以通过以下命令运行脚本，
 
 ```shell
-python -u simple_attention.py
+python simple_attention.py
 ```
 
 结果如下：

@@ -163,14 +163,15 @@ def run_func(f: Callable, des:str = "function"):
 
     s_time = time.time()
     
-    dataset = [[Tensor(np.ones((1, 512, 4096))*np.random.randn(1), mindspore.float32), None, Tensor(np.arange(512).reshape(1, -1), mindspore.float32)] for _ in range(1000)]
-    out = f(*dataset[0])
+    x = Tensor(np.random.randn(1, 512, 4096), mindspore.float32)
+    position_ids = Tensor(np.arange(512).reshape(1, -1), mindspore.float32)
+    out = f(x, None, position_ids)
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
 
     for i in range(1000):
-        out = f(*dataset[i])
+        out = f(x*(i/1000), None, position_ids)
 
     time_to_run_thousand_times = time.time() - s_time
 
