@@ -186,5 +186,5 @@ def run_func(f: Callable, des:str = "function"):
 
 
 # run jitted block fp
-run_func(mindspore.jit(fp), des="jitted block by default fp")
+# run_func(mindspore.jit(fp), des="jitted block by default fp")
 run_func(mindspore.jit(fp_and_bp), des="jitted block by default fp+bp")
