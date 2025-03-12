@@ -7,26 +7,6 @@ import mindspore
 from mindspore import ops, nn, Tensor
 
 
-x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
-
-
-def run_func(f: Callable, des:str = "function"):
-    s_time = time.time()
-
-    out = f(x)
-
-    time_to_prepare = time.time() - s_time
-    s_time = time.time()
-
-    for _ in range(1000):
-        out = f(x)
-
-    time_to_run_thousand_times = time.time() - s_time
-
-    s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
-    print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
-
-
 class BasicBlock(nn.Cell):
     """define the basic block of resnet"""
     expansion: int = 1
@@ -89,6 +69,24 @@ def fp_and_bp(x):
     return out, grads
 
 
+def run_func(f: Callable, des:str = "function"):
+    s_time = time.time()
+
+    x = Tensor(np.random.randn(1, 128, 256, 256), mindspore.float32)
+    out = f(x)
+
+    time_to_prepare = time.time() - s_time
+    s_time = time.time()
+
+    for _ in range(1000):
+        out = f(x)
+
+    time_to_run_thousand_times = time.time() - s_time
+
+    s_out_shape = f"{out.shape}" if isinstance(out, Tensor) else f"{out[0].shape}, grad[0] shape is: {out[1][0].shape}"
+    print(f"{des}, output shape is: {s_out_shape}, time to prepare: {time_to_prepare:.2f}s, time to run thousand times: {time_to_run_thousand_times:.2f}s")
+
+
 # run origin block
 run_func(fp, des="origin block fp")
 run_func(fp_and_bp, des="origin block fp+bp")
@@ -97,4 +95,3 @@ run_func(fp_and_bp, des="origin block fp+bp")
 # run jitted block fp
 run_func(mindspore.jit(fp), des="jitted block by default fp")
 run_func(mindspore.jit(fp_and_bp), des="jitted block by default fp+bp")
-
