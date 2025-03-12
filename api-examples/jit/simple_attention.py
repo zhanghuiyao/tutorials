@@ -174,7 +174,7 @@ def run_func(f: Callable, des:str = "function"):
     import pdb;pdb.set_trace()
 
     for _ in range(1000):
-        out = f(*f_input)
+        out = f(x*float(np.random.randn(1)), None, position_ids)
     
     time_to_run_thousand_times = time.time() - s_time
 
