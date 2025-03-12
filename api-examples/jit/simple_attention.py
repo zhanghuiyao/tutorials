@@ -170,8 +170,6 @@ def run_func(f: Callable, des:str = "function"):
 
     time_to_prepare = time.time() - s_time
     s_time = time.time()
-    
-    import pdb;pdb.set_trace()
 
     for _ in range(1000):
         out = f(x*float(np.random.randn(1)), None, position_ids)
